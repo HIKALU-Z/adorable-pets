@@ -2,7 +2,7 @@
     <div>
         <footer class="footer">
             <div class="content has-text-centered">
-                <p>
+                <p class="copyright">
                     CopyRight @ HIKALU from 2012-2018
                 </p>
             </div>
@@ -14,5 +14,12 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.footer {
+  background-color: #414141;
+  color: #999999;
+  .copyright {
+    color: #ffffff;
+  }
+}
 </style>

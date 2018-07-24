@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <Hero/>
+    <Nav></Nav>
+    <!-- <Hero/> -->
     <router-view/>
     <Footer></Footer>
   </div>
@@ -13,9 +14,11 @@
 
 <script>
 import Hero from "./components/Hero";
+import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 export default {
   components: {
+    Nav,
     Hero,
     Footer
   }
