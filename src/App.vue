@@ -4,10 +4,10 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <Nav></Nav>
+    <!-- <Nav></Nav> -->
     <!-- <Hero/> -->
     <router-view/>
-    <Footer></Footer>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
@@ -17,14 +17,17 @@
 // const Nav = () => import(/* webpackChunkName: "group-App" */ "./components/Nav.vue");
 // const Footer = () => import(/* webpackChunkName: "group-App" */ "./components/Footer.vue");
 // import Hero from "./components/Hero";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
+// import Nav from "./components/Nav";
+// import Footer from "./components/Footer";
 export default {
   components: {
-    Nav,
+    // Nav,
     // Hero,
-    Footer
+    // Footer
   }
+  // mounted() {
+  //   this.toggleBodyClassList();
+  // }
 };
 </script>
 

@@ -26,12 +26,12 @@
                         Search
                     </router-link>
                     <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link" href="/documentation/overview/start/">
-                            Docs
+                        <a class="navbar-link" href="#">
+                            Admin
                         </a>
                         <div class="navbar-dropdown is-boxed">
-                            <router-link to="/some" class="navbar-item is-active">
-                                some
+                            <router-link to="/admin/category" class="navbar-item is-active">
+                                Category
                             </router-link>
                         </div>
                     </div>

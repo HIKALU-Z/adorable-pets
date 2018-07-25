@@ -2,12 +2,18 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import iView from "iview";
+import bulmaUtil from "./utils/bulma";
+import "iview/dist/styles/iview.css";
 import "bulma";
 // import "./../node_modules/material-design-icons/iconfont/material-icons.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 Vue.config.productionTip = false;
+Vue.use(iView);
+
+bulmaUtil.DOMloaded();
 
 /**
  * 每次路由跳转前做判断
@@ -20,29 +26,12 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(
-    document.querySelectorAll(".navbar-burger"),
-    0
-  );
-
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-    // Add a click event on each of them
-    $navbarBurgers.forEach(el => {
-      el.addEventListener("click", () => {
-        // Get the target from the "data-target" attribute
-        const target = el.dataset.target;
-        const $target = document.getElementById(target);
-
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        el.classList.toggle("is-active");
-        $target.classList.toggle("is-active");
-      });
-    });
-  }
-});
+/**
+ * 切换 body 上的 class 以方便 Nav fixed 作用时生成一个脱离文档流的间距
+ */
+Vue.prototype.$toggleBodyClassList = function() {
+  document.body.classList.toggle("has-navbar-fixed-top");
+};
 
 new Vue({
   router,

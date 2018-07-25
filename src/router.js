@@ -4,6 +4,9 @@ import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Search from "./views/Search.vue";
 import Detail from "./views/Detail.vue";
+import AdminBase from "./views/admin/AdminBase.vue";
+import Category from "./views/admin/Category.vue";
+import UserManager from "./views/admin/UserManager.vue";
 
 Vue.use(Router);
 
@@ -40,6 +43,30 @@ export default new Router({
       meta: {
         title: "搜索"
       }
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: AdminBase,
+      meta: {
+        title: "管理"
+      },
+      children: [
+        {
+          path: "category",
+          component: Category,
+          meta: {
+            title: "管理-分类管理"
+          }
+        },
+        {
+          path: "user",
+          component: UserManager,
+          meta: {
+            title: "管理-用户管理"
+          }
+        }
+      ]
     }
   ]
 });
