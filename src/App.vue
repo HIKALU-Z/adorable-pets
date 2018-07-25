@@ -13,13 +13,16 @@
 
 
 <script>
-import Hero from "./components/Hero";
+// const Hero = () => import(/* webpackChunkName: "group-App" */ "./components/Hero.vue");
+// const Nav = () => import(/* webpackChunkName: "group-App" */ "./components/Nav.vue");
+// const Footer = () => import(/* webpackChunkName: "group-App" */ "./components/Footer.vue");
+// import Hero from "./components/Hero";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 export default {
   components: {
     Nav,
-    Hero,
+    // Hero,
     Footer
   }
 };

@@ -9,7 +9,11 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "@mdi/font": "^2.5.94",
+    "axios": "^0.18.0",
     "bulma": "^0.7.1",
+    "material-design-icons": "^3.0.1",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

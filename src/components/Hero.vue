@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <section class="hero is-primary">
+        <section class="hero is-fullheight">
             <!-- Hero head: will stick at the top -->
             <div class="hero-head">
                 <nav class="navbar">
@@ -41,7 +41,7 @@
             </div>
 
             <!-- Hero content: will be in the middle -->
-            <!-- <div class="hero-body">
+            <div class="hero-body">
                 <div class="container has-text-centered text-shadow">
                     <h1 class="title">
                         喵呜啊呜
@@ -50,10 +50,10 @@
                         爱宠大作战
                     </h2>
                 </div>
-            </div> -->
+            </div>
 
             <!-- Hero footer: will stick at the bottom -->
-            <!-- <div class="hero-foot">
+            <div class="hero-foot">
                 <nav class="tabs">
                     <div class="container">
                         <ul>
@@ -78,7 +78,7 @@
                         </ul>
                     </div>
                 </nav>
-            </div> -->
+            </div>
         </section>
     </div>
 </template>

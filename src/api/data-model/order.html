@@ -1,0 +1,62 @@
+<script src="./../../../node_modules/axios/dist/axios.js"></script>
+<script src="./../api.js"></script>
+<script>
+    let model = {
+        name: 'order',
+        structure: {
+            sum: {
+                type: 'float',
+                nullable: false
+            },
+            oid: {
+                type: 'integer',
+                nullable: false
+            },
+            product_info: {
+                type: 'text',
+                nullable: true
+            },
+            pay_by: {
+                type: 'string',
+                nullable: true
+            },
+            memo: {
+                type: 'string',
+                nullable: true
+            },
+            user_id: {
+                type: 'integer',
+                nullable: false
+            }
+        }
+    };
+
+    // api('MODEL/CREATE_PROPERTY', {
+    //   model     : 'appo',
+    //   property  : 'phone',
+    //   structure : {
+    //     type     : 'string',
+    //     nullable : true,
+    //   },
+    // });
+
+    // api('MODEL/DELETE_PROPERTY', {
+    //   model     : 'appo',
+    //   property  : 'email',
+    // });
+    //
+    // api('MODEL/CREATE_PROPERTY', {
+    //   model     : 'appo',
+    //   property  : 'mail',
+    //   structure : {
+    //     type     : 'string',
+    //     nullable : true,
+    //   },
+    // });
+
+    api('MODEL/CREATE', model);
+
+    // api('MODEL/FIND', { name : 'appo' });
+
+    // api('MODEL/DELETE', { name : 'model' });
+</script>
