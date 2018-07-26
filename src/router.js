@@ -7,6 +7,9 @@ import Detail from "./views/Detail.vue";
 import AdminBase from "./views/admin/AdminBase.vue";
 import Category from "./views/admin/Category.vue";
 import UserManager from "./views/admin/UserManager.vue";
+import Order from "./views/admin/Order.vue";
+import Pet from "./views/admin/Pet.vue";
+import Breed from "./views/admin/Breed.vue";
 
 Vue.use(Router);
 
@@ -64,6 +67,27 @@ export default new Router({
           component: UserManager,
           meta: {
             title: "管理-用户管理"
+          }
+        },
+        {
+          path: "order",
+          component: Order,
+          meta: {
+            title: "管理-订单管理"
+          }
+        },
+        {
+          path: "pet",
+          component: Pet,
+          meta: {
+            title: "管理-订单管理"
+          }
+        },
+        {
+          path: "breed",
+          component: Breed,
+          meta: {
+            title: "管理-品种管理"
           }
         }
       ]

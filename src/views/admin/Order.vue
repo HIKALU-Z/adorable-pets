@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div class="level">
       <div class="level-left">
@@ -13,18 +14,27 @@
 
     <section class="box" v-if="showForm">
       <Form :model="current" @submit.native.prevent="handleSubmit">
-        <h2>用户管理表单</h2>
-        <FormItem label="用户姓名" prop="username">
-          <Input v-model="current.username" placeholder="用户姓名"></Input>
+        <h2>订单管理表</h2>
+        <FormItem label="订单号" prop="oid">
+          <Input v-model="current.oid" placeholder="请输入订单号"></Input>
         </FormItem>
-        <FormItem label="电话" prop="phone">
-          <Input v-model="current.phone" placeholder="电话"></Input>
+        <FormItem label="宠物信息" prop="product_info">
+          <Input v-model="current.product_info" placeholder="请输入宠物信息"></Input>
         </FormItem>
-        <FormItem label="邮箱" prop="email">
-          <Input v-model="current.email" placeholder="邮箱"></Input>
+        <FormItem label="备注" prop="memo">
+          <Input v-model="current.memo" placeholder="请输入备注"></Input>
         </FormItem>
-        <FormItem label="密码" prop="username">
-          <Input v-model="current.password" type="password" placeholder="密码"></Input>
+        <FormItem label="用户编号" prop="user_id">
+          <Input v-model="current.user_id" placeholder="请输入订单关联用户的编号"></Input>
+        </FormItem>
+        <FormItem label="总价" prop="sum">
+          <Input v-model="current.sum" placeholder="请输入订单总价"></Input>
+        </FormItem>
+        <FormItem label="支付方式" prop="pay_by">
+          <RadioGroup v-model="current.pay_by">
+            <Radio label="支付宝"></Radio>
+            <Radio label="微信"></Radio>
+          </RadioGroup>
         </FormItem>
         <Button type="primary" html-type="submit">提交</Button>
         <Button @click="showForm = false" style="marginLeft:10px">取消</Button>
@@ -36,22 +46,45 @@
 </template>
 
 <script>
+// import api from "./../../api/";
+
 import AdminMixinsVue from "./mixins/AdminMixins.vue";
 export default {
   mixins: [AdminMixinsVue],
   data() {
     return {
-      model: "user",
+      model: "order",
+      current: {},
+      currentPage: 1,
       columnsConfig: [
-        { title: "用户名", key: "username" },
-        { title: "邮箱", key: "email" },
         {
-          title: "电话",
-          key: "phone"
+          title: "订单号",
+          key: "oid"
+        },
+        {
+          title: "下单用户",
+          key: "user_id"
+        },
+        {
+          title: "总价",
+          key: "sum"
+        },
+        {
+          title: "备注",
+          key: "memo"
+        },
+        {
+          title: "宠物信息",
+          key: "product_info"
+        },
+        {
+          title: "支付方式",
+          key: "pay_by"
         },
         {
           title: "操作",
           key: "action",
+          minWidth: 100,
           render: (h, params) => {
             return h("div", [
               h(
@@ -95,7 +128,8 @@ export default {
         }
       ]
     };
-  }
+  },
+  methods: {}
 };
 </script>
 
