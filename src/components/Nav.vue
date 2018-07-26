@@ -30,7 +30,7 @@
                             Admin
                         </a>
                         <div class="navbar-dropdown is-boxed">
-                            <router-link to="/admin/category" class="navbar-item is-active">
+                            <router-link to="/admin/category" class="navbar-item">
                                 Category
                             </router-link>
                         </div>
@@ -51,7 +51,13 @@
 </template>
 
 <script>
-export default {};
+import bulmaUtil from "./../utils/bulma";
+export default {
+  mounted() {
+    console.log("123");
+    bulmaUtil.DOMloaded();
+  }
+};
 </script>
 
 <style scoped>

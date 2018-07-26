@@ -3,7 +3,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import iView from "iview";
-import bulmaUtil from "./utils/bulma";
 import "iview/dist/styles/iview.css";
 import "bulma";
 // import "./../node_modules/material-design-icons/iconfont/material-icons.css";
@@ -13,7 +12,21 @@ import "@fortawesome/fontawesome-free/css/all.css";
 Vue.config.productionTip = false;
 Vue.use(iView);
 
-bulmaUtil.DOMloaded();
+/**
+ * 切换 body 上的 class 以方便 Nav fixed 作用时生成一个脱离文档流的间距
+ * @param flag 设置是否添加 fixed 类
+ */
+const $toggleBodyClassList = function(flag) {
+  const CLASSNAME = "has-navbar-fixed-top";
+  let list = document.body.classList;
+  let value = list.value;
+  let index = value.indexOf(CLASSNAME);
+  if (flag && index < 0) {
+    list.add(CLASSNAME);
+  } else if (!flag && index >= 0) {
+    list.remove(CLASSNAME);
+  }
+};
 
 /**
  * 每次路由跳转前做判断
@@ -23,15 +36,13 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title !== undefined) {
     document.title = to.meta.title;
   }
+  if (to.fullPath.startsWith("/admin/")) {
+    $toggleBodyClassList(false);
+  } else {
+    $toggleBodyClassList(true);
+  }
   next();
 });
-
-/**
- * 切换 body 上的 class 以方便 Nav fixed 作用时生成一个脱离文档流的间距
- */
-Vue.prototype.$toggleBodyClassList = function() {
-  document.body.classList.toggle("has-navbar-fixed-top");
-};
 
 new Vue({
   router,

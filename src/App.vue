@@ -25,9 +25,6 @@ export default {
     // Hero,
     // Footer
   }
-  // mounted() {
-  //   this.toggleBodyClassList();
-  // }
 };
 </script>
 

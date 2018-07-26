@@ -1,6 +1,7 @@
 <template>
     <div>
-        <!-- <Hero></Hero> -->
+        <Nav></Nav>
+
         <section>
             <div class="picture-container">
                 <div class="picture-main">
@@ -30,20 +31,47 @@
                 <!-- <img src="./../assets/img/cat/miao-10.jpg" alt="cat"> -->
             </div>
         </section>
-        <section class="section is-medium">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur doloremque earum consectetur numquam sapiente perspiciatis ducimus cupiditate quaerat, inventore vero, dignissimos dolorem veniam, odio commodi possimus. Accusantium veritatis est rem!
-            <div class="box">
-                夕阳沿着西湖边
+
+        <section class="section">
+            <div class="columns">
+                <div class="column is-8">
+                    <h1>A Pirate's Life For Me - Houseboat!</h1>
+                    <hr>
+                    <div class="columns">
+                        <div class="column is-3 card">已绝育</div>
+                        <div class="column is-3 card">已绝育</div>
+                        <div class="column is-3 card">已绝育</div>
+                        <div class="column is-3 card">已绝育</div>
+                    </div>
+                    <hr>
+                    <div>
+                        1234
+                    </div>
+                    <hr>
+                    <div>
+                        1234
+                    </div>
+                    <hr>
+                </div>
+                <div class="column is-4">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel placeat recusandae voluptate sed aspernatur iusto accusantium corrupti minima voluptas, ad quam, fuga, id dolorum soluta minus consequuntur veritatis? Hic, nemo.
+                </div>
             </div>
         </section>
+
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
-const Hero = () => import("./../components/Hero.vue");
+const Nav = () =>
+  import(/* webpackChunkName: "group-Detail" */ "./../components/Nav.vue");
+const Footer = () =>
+  import(/* webpackChunkName: "group-Detail" */ "./../components/Footer.vue");
 export default {
   components: {
-    Hero
+    Nav,
+    Footer
   }
 };
 </script>
@@ -51,13 +79,9 @@ export default {
 <style lang="scss" scoped>
 .picture-container {
   position: relative;
-  //   border-top: 8px solid #ffffff;
+  border-top: 8px solid #ffffff;
   //   height: 300px;
   .picture-main {
-    // position: absolute;
-    // top: 0;
-    // right: 0;
-    // left: 0;
     background-color: rgb(54, 214, 214);
     background-image: url("./../assets/img/cat/miao-10.jpg");
     background-position: 50% 50%;
@@ -83,5 +107,10 @@ export default {
       box-shadow: 0 1px 1px 1px rgba($color: #000000, $alpha: 0.15);
     }
   }
+}
+.section hr {
+  color: #ffffff;
+  border: 1px dashed #a6cdec77;
+  height: 0;
 }
 </style>

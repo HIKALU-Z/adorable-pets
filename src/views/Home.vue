@@ -12,6 +12,7 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import Pets from "../components/Pets";
+
 const Nav = () =>
   import(/* webpackChunkName: "group-App" */ "./../components/Nav.vue");
 const Footer = () =>

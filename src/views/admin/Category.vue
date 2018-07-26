@@ -1,29 +1,29 @@
 <template>
-    <div>
-        <div class="level">
-            <div class="level-left">
-                <Input v-model="keyword" style="width:300px">
-                <Button slot="append" icon="ios-search"></Button>
-                </Input>
-            </div>
-            <div class="level-right">
-                <Button type="primary" @click="showForm = true">创建</Button>
-            </div>
-        </div>
-
-        <section class="box" v-if="showForm">
-            <Form :model="current" @submit.native.prevent="handleSubmit">
-                <h2>分类管理表单</h2>
-                <FormItem label="分类名称" prop="name">
-                    <Input v-model="current.name" name="name" placeholder="Enter something..."></Input>
-                </FormItem>
-                <Button type="primary" html-type="submit">提交</Button>
-                <Button @click="showForm = false" style="marginLeft:10px">取消</Button>
-            </Form>
-        </section>
-
-        <Table :columns="columnsConfig" :data="list"></Table>
+  <div>
+    <div class="level">
+      <div class="level-left">
+        <Input v-model="keyword">
+        <Button slot="append" icon="ios-search"></Button>
+        </Input>
+      </div>
+      <div class="level-right">
+        <Button type="primary" @click="showForm = true">创建</Button>
+      </div>
     </div>
+
+    <section class="box" v-if="showForm">
+      <Form :model="current" @submit.native.prevent="handleSubmit">
+        <h2>分类管理表单</h2>
+        <FormItem label="分类名称" prop="name">
+          <Input v-model="current.name" name="name" placeholder="请输入宠物种类"></Input>
+        </FormItem>
+        <Button type="primary" html-type="submit">提交</Button>
+        <Button @click="showForm = false" style="marginLeft:10px">取消</Button>
+      </Form>
+    </section>
+
+    <Table :columns="columnsConfig" :data="list"></Table>
+  </div>
 </template>
 
 <script>

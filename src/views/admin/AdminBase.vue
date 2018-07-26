@@ -7,16 +7,19 @@
                         <Icon type="ios-analytics"></Icon>
                         数据管理
                     </template>
-                    <MenuItem name="data-category"> 分类管理
+                    <MenuItem name="data-category">
+                    <router-link to="/admin/category" tag="li">分类管理</router-link>
                     </MenuItem>
                     <MenuItem name="date-user">
-                    <router-link to="/admin/user">用户管理</router-link>
+                    <router-link to="/admin/user" tag="li">用户管理</router-link>
                     </MenuItem>
                 </Submenu>
             </Menu>
         </Sider>
         <Layout :style="{marginLeft: '200px'}">
-            <!-- <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header> -->
+            <Header :style="{background: '#fff', boxShadow: '0 2px 3px rgba(0,0,0,0.15)'}">
+               <router-link to="/">Home</router-link>
+            </Header>
             <Content :style="{padding: '0 16px 16px'}">
                 <!-- <Breadcrumb :style="{margin: '16px 0'}">
                     <BreadcrumbItem>Home</BreadcrumbItem>
