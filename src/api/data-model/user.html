@@ -13,7 +13,7 @@
                 nullable: false
             },
             phone: {
-                type: 'integer',
+                type: 'string',
                 nullable: false
             },
             password: {
@@ -50,7 +50,15 @@
     //   },
     // });
 
-    api('MODEL/READ');
+    // api('MODEL/READ');
+    api('PROPERTY/UPDATE', {
+        model: 'user',
+        key: "phone",
+        structure: {
+            type: 'string',
+            nullable: true
+        }
+    });
 
     // api('MODEL/FIND', { name : 'appo' });
 

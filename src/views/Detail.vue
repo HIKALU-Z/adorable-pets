@@ -110,7 +110,7 @@ export default {
 }
 .section hr {
   color: #ffffff;
-  border: 1px dashed #a6cdec77;
+  border: 1px dashed #a6ccecc9;
   height: 0;
 }
 </style>
