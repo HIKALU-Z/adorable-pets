@@ -32,8 +32,8 @@
         </FormItem>
         <FormItem label="支付方式" prop="pay_by">
           <RadioGroup v-model="current.pay_by">
-            <Radio label="支付宝"></Radio>
-            <Radio label="微信"></Radio>
+            <Radio label="alipay"></Radio>
+            <Radio label="wechat"></Radio>
           </RadioGroup>
         </FormItem>
         <Button type="primary" html-type="submit">提交</Button>

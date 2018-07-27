@@ -51,11 +51,10 @@
 </template>
 
 <script>
-import bulmaUtil from "./../utils/bulma";
+import bulmaUtils from "./../utils/bulma";
 export default {
   mounted() {
-    console.log("123");
-    bulmaUtil.DOMloaded();
+    bulmaUtils.DOMloaded();
   }
 };
 </script>

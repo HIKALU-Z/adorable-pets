@@ -10,6 +10,9 @@ import UserManager from "./views/admin/UserManager.vue";
 import Order from "./views/admin/Order.vue";
 import Pet from "./views/admin/Pet.vue";
 import Breed from "./views/admin/Breed.vue";
+import OrderBase from "./views/order/OrderBase.vue";
+import NewOrder from "./views/order/NewOrder.vue";
+import PayOrder from "./views/order/PayOrder.vue";
 
 Vue.use(Router);
 
@@ -46,6 +49,30 @@ export default new Router({
       meta: {
         title: "搜索"
       }
+    },
+    {
+      path: "/order",
+      name: "order",
+      component: OrderBase,
+      meta: {
+        title: "订单"
+      },
+      children: [
+        {
+          path: "new",
+          component: NewOrder,
+          meta: {
+            title: "订单-新建订单"
+          }
+        },
+        {
+          path: "pay",
+          component: PayOrder,
+          meta: {
+            title: "订单-支付订单"
+          }
+        }
+      ]
     },
     {
       path: "/admin",

@@ -35,13 +35,13 @@
         <section class="section">
             <div class="columns">
                 <div class="column is-8">
-                    <h1>A Pirate's Life For Me - Houseboat!</h1>
+                    <h1>猫咪，小奶猫，美短，英短，布偶!</h1>
                     <hr>
                     <div class="columns">
-                        <div class="column is-3 card">已绝育</div>
-                        <div class="column is-3 card">已绝育</div>
-                        <div class="column is-3 card">已绝育</div>
-                        <div class="column is-3 card">已绝育</div>
+                        <div class="column is-3 card">年龄</div>
+                        <div class="column is-3 card">纯种</div>
+                        <div class="column is-3 card">性别</div>
+                        <div class="column is-3 card">防疫</div>
                     </div>
                     <hr>
                     <div>
@@ -54,7 +54,13 @@
                     <hr>
                 </div>
                 <div class="column is-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel placeat recusandae voluptate sed aspernatur iusto accusantium corrupti minima voluptas, ad quam, fuga, id dolorum soluta minus consequuntur veritatis? Hic, nemo.
+                    <div class="box">
+                        <h2>This is a Persian cat!
+                        </h2>
+                        <span>$1000
+                        </span>
+                        <button class="button is-primary" @click="handleGo(current)">Payme </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -72,6 +78,21 @@ export default {
   components: {
     Nav,
     Footer
+  },
+  data() {
+    return {
+      current: {
+        pet_id: 1
+      }
+    };
+  },
+  methods: {
+    handleGo(query) {
+      console.log(this.$router);
+      //   return;
+      this.$router.push("/order/new");
+      this.$router.replace({ query });
+    }
   }
 };
 </script>
