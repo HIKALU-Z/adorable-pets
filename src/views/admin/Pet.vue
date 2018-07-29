@@ -122,8 +122,7 @@ export default {
         },
         {
           title: "是否接种疫苗",
-          key: "vaccinated",
-          width: 100
+          key: "vaccinated"
         },
         {
           title: "操作",

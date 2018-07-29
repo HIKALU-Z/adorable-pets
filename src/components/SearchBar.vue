@@ -1,11 +1,10 @@
 <template>
     <div>
-        <div class="container is-fullwidth">
-            container
-            <button>1324</button>
-            <button>1324</button>
-            <button>1324</button>
-            <button>1324</button>
+        <div class="search-container">
+            <button class="button">毛色</button>
+            <button class="button">脾气</button>
+            <button class="button">年龄</button>
+            <button class="button">价格</button>
         </div>
     </div>
 </template>
@@ -14,8 +13,15 @@
 export default {};
 </script>
 
-<style scoped>
-button {
+<style lang="scss" scoped>
+.search-container {
+  background-color: #fff;
   padding: 20px;
+  * {
+    margin-left: 20px;
+  }
+  *:first-child {
+    margin-left: 0;
+  }
 }
 </style>

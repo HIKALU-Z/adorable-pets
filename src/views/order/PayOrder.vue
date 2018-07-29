@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <section class="section is-medium">
-            <div class="columns" v-if="order.pay_by=='wechat'">
-                <div class="column  box is-2 is-offset-5">
-                    <h2 class="has-text-centered">微信支付</h2>
-                    <img :src="payment_url" alt="qrcode">
-                </div>
-            </div>
-            <div class="columns" v-else>
-                <div class="column has-text-centered">
-                    <!-- <h2 class="has-text-centered">点此前往支付</h2> -->
-                    <a :href="payment_url" class="button is-info" target="_blank">点此前往支付</a>
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-2 is-offset-5 has-text-centered">
-                    <button class="button is-primary">完成支付</button>
-                </div>
-            </div>
-        </section>
-    </div>
+  <div>
+    <section class="section is-medium">
+      <div class="columns" v-if="order.pay_by=='wechat'">
+        <div class="column  box is-2 is-offset-5">
+          <h2 class="has-text-centered">微信支付</h2>
+          <img :src="payment_url" alt="qrcode">
+        </div>
+      </div>
+      <div class="columns" v-else>
+        <div class="column has-text-centered">
+          <!-- <h2 class="has-text-centered">点此前往支付</h2> -->
+          <a :href="payment_url" class="button is-info" target="_blank">点此前往支付</a>
+        </div>
+      </div>
+      <div class="columns">
+        <div class="column is-2 is-offset-5 has-text-centered">
+          <button class="button is-primary" @click="handleVerify">完成支付</button>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -63,7 +63,14 @@ export default {
         this.payment_url = r.data.url || r.data.qrcode;
       });
     },
-    handleVerify() {}
+    handleVerify() {
+      api("order/find", {
+        id: this.order.id
+      }).then(r => {
+        if (r.data._paid) alert("支付成功");
+        else alert("支付失败");
+      });
+    }
   }
 };
 </script>

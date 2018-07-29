@@ -21,7 +21,7 @@
       {{payment_url}}
     </div> -->
 
-    <div v-if="payment_url">
+    <!-- <div v-if="payment_url">
       <div class="columns">
         <div v-if="current.pay_by=='wechat'" class="columns is-6">
           <img :src="payment_url" alt="二维码">
@@ -33,7 +33,7 @@
       <div>
         <button @click="handleVerify">支付完成</button>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </template>
