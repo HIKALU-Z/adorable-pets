@@ -3,111 +3,37 @@
         <section class="section">
             <div class="container">
                 <!-- first-tile -->
-                <div class="tile is-ancestor">
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">One</p>
-                            <p class="subtitle">Subtitle</p>
-                            <img src="./../assets/img/cat/miao-8.jpg" alt="">
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">Two</p>
-                            <p class="subtitle">Subtitle</p>
-                            <img src="./../assets/img/cat/miao-8.jpg" alt="">
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">Three</p>
-                            <p class="subtitle">Subtitle</p>
-                            <img src="./../assets/img/cat/miao-8.jpg" alt="">
-                        </article>
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <p class="title">Four</p>
-                            <p class="subtitle">Subtitle</p>
-                            <img src="./../assets/img/cat/miao-8.jpg" alt="">
-                        </article>
-                    </div>
-                </div>
+                <div class="columns is-multiline">
+                    <div class="column is-4" v-for="(item, index) in 7" :key="index">
+                        <router-link :to="'/detail/'+item" tag="article" class="card">
+                            <div class="card-image">
+                                <figure class="image is-16by9">
+                                    <img src="./../assets/img/cat/miao-4.jpg" alt="">
+                                </figure>
+                            </div>
 
-                <!-- <div>
-                    <img src="./../assets/img/cat/miao-8.jpg" alt="">
-                </div> -->
-                <!-- second-tile -->
-                <div class="tile is-ancestor">
-                    <div class="tile is-9">
-                        <div class="tile">
-                            <div class="tile is-parent">
-                                <article class="tile is-child box">
-                                    <p class="title">Five</p>
-                                    <p class="subtitle">Subtitle</p>
-                                    <div class="content">
-                                        <img src="./../assets/img/cat/miao-7.jpg" alt="miao">
+                            <div class="card-content">
+                                <i class="mdi mdi-currency-cny">188</i>
+                                <Rate style="float:right;clear:both" disabled v-model="value"></Rate>
+                                <!-- <div class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-48x48">
+                                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                                        </figure>
                                     </div>
-                                </article>
+                                    <div class="media-content">
+                                        <p class="title is-4">John Smith</p>
+                                        <p class="subtitle is-6">@johnsmith</p>
+                                    </div>
+                                </div> -->
                             </div>
-                            <div class="tile is-8 is-vertical">
-                                <div class="tile">
-                                    <div class="tile is-parent">
-                                        <article class="tile is-child box">
-                                            <p class="title">Six</p>
-                                            <p class="subtitle">Subtitle</p>
-                                            <img src="./../assets/img/cat/miao-4.jpg" alt="miao">
-                                        </article>
-                                    </div>
-                                    <div class="tile is-parent">
-                                        <article class="tile is-child box">
-                                            <p class="title">Seven</p>
-                                            <p class="subtitle">Subtitle</p>
-                                            <img src="./../assets/img/cat/miao-4.jpg" alt="miao">
-                                        </article>
-                                    </div>
+                            <div class="card-footer">
+                                <div class="card-footer-item">
+                                    <i class="mdi mdi-map-marker"></i>南京
                                 </div>
-                                <div class="tile is-parent">
-                                    <article class="tile is-child box">
-                                        <p class="title">Eight</p>
-                                        <p class="subtitle">Subtitle</p>
-                                        <img src="./../assets/img/cat/long-2.jpg" alt="miao">
-                                    </article>
-                                </div>
+                                <!-- <div class="card-footer-item">B</div> -->
                             </div>
-                        </div>
-                        <!-- <div class="tile">
-                            <div class="tile is-8 is-parent">
-                                <article class="tile is-child box">
-                                    <p class="title">Nine</p>
-                                    <p class="subtitle">Subtitle</p>
-                                    <div class="content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-                                    </div>
-                                </article>
-                            </div>
-                            <div class="tile is-parent">
-                                <article class="tile is-child box">
-                                    <p class="title">Ten</p>
-                                    <p class="subtitle">Subtitle</p>
-                                    <div class="content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-                                    </div>
-                                </article>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="tile is-parent">
-                        <article class="tile is-child box">
-                            <div class="content">
-                                <p class="title">Eleven</p>
-                                <p class="subtitle">Subtitle</p>
-                                <div class="content">
-                                    <img src="./../assets/img/cat/miao-10.jpg" alt="miao">
-                                
-                                </div>
-                            </div>
-                        </article>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -116,27 +42,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      value: 5
+    };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .card {
-  overflow: hidden;
-}
-.card.is-verticle {
-  width: 240px;
-  height: 320px;
-  img {
-    width: 100%;
-    height: 100%;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  &:hover {
+    box-shadow: 0 2px 3px 1px rgba($color: #000000, $alpha: 0.2);
   }
-}
-.card.is-horizontal {
-  width: 320px;
-  height: 240px;
-  img {
-    width: 100%;
-    height: 100%;
+  .thumbnail {
+    height: 150px;
+  }
+  .content {
+    padding: 8px 16px;
   }
 }
 </style>

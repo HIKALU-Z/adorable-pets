@@ -36,7 +36,11 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title !== undefined) {
     document.title = to.meta.title;
   }
-  if (to.fullPath.startsWith("/admin/")) {
+  if (
+    to.fullPath.startsWith("/admin/") ||
+    to.fullPath.startsWith("/signup") ||
+    to.fullPath.startsWith("/login")
+  ) {
     $toggleBodyClassList(false);
   } else {
     $toggleBodyClassList(true);

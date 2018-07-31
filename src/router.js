@@ -13,6 +13,8 @@ import Breed from "./views/admin/Breed.vue";
 import OrderBase from "./views/order/OrderBase.vue";
 import NewOrder from "./views/order/NewOrder.vue";
 import PayOrder from "./views/order/PayOrder.vue";
+import Login from "./views/Login.vue";
+import Signup from "./views/Signup.vue";
 
 Vue.use(Router);
 
@@ -35,7 +37,7 @@ export default new Router({
       }
     },
     {
-      path: "/detail",
+      path: "/detail/:id",
       name: "detail",
       component: Detail,
       meta: {
@@ -48,6 +50,22 @@ export default new Router({
       component: Search,
       meta: {
         title: "搜索"
+      }
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+      meta: {
+        title: "登录"
+      }
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: Signup,
+      meta: {
+        title: "注册"
       }
     },
     {

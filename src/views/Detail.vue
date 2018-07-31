@@ -35,7 +35,7 @@
         <section class="section">
             <div class="columns">
                 <div class="column is-8">
-                    <h1>猫咪，小奶猫，美短，英短，布偶!</h1>
+                    <h1 class="title">猫咪，小奶猫，美短，英短，布偶!</h1>
                     <hr>
                     <div class="columns">
                         <div class="column is-3 card">年龄</div>
@@ -55,10 +55,10 @@
                 </div>
                 <div class="column is-4">
                     <div class="box">
-                        <h2>This is a Persian cat!
+                        <h2 class="title">This is a Persian cat!
                         </h2>
-                        <span>$1000
-                        </span>
+                        <p class="subtitle mdi mdi-currency-cny">1000
+                        </p>
                         <button class="button is-primary" @click="handleGo(current)">Payme </button>
                     </div>
                 </div>

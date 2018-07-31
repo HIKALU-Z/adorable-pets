@@ -19,7 +19,7 @@
                     <router-link to="/" class="navbar-item">
                         Home
                     </router-link>
-                    <router-link to="/detail" class="navbar-item">
+                    <router-link to="/detail/1" class="navbar-item">
                         Detail
                     </router-link>
                     <router-link to="/search" class="navbar-item">
@@ -38,8 +38,11 @@
                 </div>
 
                 <div class="navbar-end">
-                    <router-link to="/" class="navbar-item">
-                        personal-info
+                    <router-link to="/login" class="navbar-item">
+                        登录
+                    </router-link>
+                    <router-link to="/signup" class="navbar-item">
+                        注册
                     </router-link>
                     <!-- <div class="navbar-item">
                        
