@@ -19,7 +19,9 @@
           <Input v-model="current.name" placeholder="请输入品种名称"></Input>
         </FormItem>
         <FormItem label="所属种类" prop="category_id">
-          <Input v-model="current.category_id" placeholder="请输入所属种类"></Input>
+          <Select v-model="current.category_id" clearable filterable remote :remote-method="getCategoryList" :loading="loading" placeholder="请输入关键字以选择种类">
+            <Option v-for="(option, index) in categoryOptions" :value="option.value" :key="index">{{option.label}}</Option>
+          </Select>
         </FormItem>
         <Button type="primary" html-type="submit">提交</Button>
         <Button @click="showForm = false" style="marginLeft:10px">取消</Button>
@@ -34,13 +36,20 @@
 // import api from "./../../api/";
 
 import AdminMixinsVue from "./mixins/AdminMixins.vue";
+import api from "../../api";
 export default {
   mixins: [AdminMixinsVue],
+  mounted() {
+    this.readCategoryList();
+  },
   data() {
     return {
-      model: "breed",
+      model: "breed", // 模型名
       current: {},
       currentPage: 1,
+      loading: false,
+      categoryOptions: [], // 分类选项
+      categoryListCache: [], // 分类缓存，方便稍后进行读取
       columnsConfig: [
         {
           title: "种类名称",
@@ -48,7 +57,11 @@ export default {
         },
         {
           title: "所属种类",
-          key: "category_id"
+          key: "category_id",
+          render: (h, params) => {
+            let item = this.getCategoryNameByid(params.row.category_id);
+            return h("div", {}, item);
+          }
         },
         {
           title: "操作",
@@ -97,7 +110,40 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    getCategoryList(query) {
+      this.loading = true;
+
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        api(`category/search`, { or: { name: query } }).then(r => {
+          this.loading = false;
+          this.categoryOptions = r.data.map(item => {
+            return {
+              value: item.id,
+              label: item.name
+            };
+          });
+        });
+      }, 300);
+    },
+    readCategoryList() {
+      api("category/read").then(r => {
+        this.categoryOptions = r.data.map(item => {
+          return {
+            value: item.id,
+            label: item.name
+          };
+        });
+        this.categoryListCache = this.categoryOptions.concat();
+      });
+    },
+    getCategoryNameByid(id) {
+      let result = this.categoryListCache.filter(item => item.value == id);
+      return result[0].label;
+    }
+  }
 };
 </script>
 

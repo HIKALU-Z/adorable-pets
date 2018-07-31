@@ -37,8 +37,11 @@
           <Input v-model="current.cover_url" placeholder="请输入封面照片地址"></Input>
         </FormItem>
         <FormItem label="品牌" prop="breed">
-          <Input v-model="current.breed" placeholder="请输入品牌"></Input>
+          <Select v-model="current.breed" filterable  :remote-method="remoteMethod" :loading="loading" placeholder="请输入关键字以选择品牌">
+            <Option v-for="(option, index) in options" :value="option.value" :key="index">{{option.label}}</Option>
+          </Select>
         </FormItem>
+
         <FormItem label="种类" prop="category_id">
           <Input v-model="current.category_id" placeholder="请输入种类"></Input>
         </FormItem>
@@ -93,6 +96,9 @@ export default {
       model: "pet",
       current: {},
       currentPage: 1,
+      loading: false,
+      options: [],
+      dataList: ["a", "b", "c"],
       columnsConfig: [
         {
           title: "标题",
@@ -173,7 +179,28 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    // 搜索远程数据
+    remoteMethod(query) {
+      if (query !== "") {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          const list = this.dataList.map(item => {
+            return {
+              value: item,
+              label: item
+            };
+          });
+          this.options = list.filter(
+            item => item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
+          );
+        }, 200);
+      } else {
+        this.options = [];
+      }
+    }
+  }
 };
 </script>
 
