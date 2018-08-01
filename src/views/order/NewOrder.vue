@@ -40,6 +40,8 @@
 
 <script>
 import api from "./../../api";
+import session from "./../../utils/session.js";
+import { generate_oid } from "./../../utils/order.js";
 export default {
   mounted() {
     this.current = Object.assign({}, this.current, this.$route.query);
@@ -68,12 +70,15 @@ export default {
     handleSubmit() {
       api("order/create", this.current).then(r => {
         console.log(r);
-        this.$router.push({ path: "pay", query: { id: r.data.id } });
+        this.$router.push("pay/" + r.data.oid);
       });
     },
     initCurrent(product) {
       this.current.price = product.price;
       this.current.sum = product.price * this.current.count;
+      this.current.product_info = product.id;
+      this.current.oid = generate_oid(product.id);
+      this.current.user_id = session.his_id();
     }
   },
   computed: {

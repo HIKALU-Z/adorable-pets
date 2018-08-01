@@ -13,7 +13,7 @@
                 nullable: false
             },
             product_info: {
-                type: 'text',
+                type: 'json',
                 nullable: true
             },
             pay_by: {
@@ -33,9 +33,9 @@
 
     api('PROPERTY/UPDATE', {
         model: 'order',
-        key: 'user_id',
+        key: 'product_info',
         structure: {
-            type: "integer",
+            type: "json",
             nullable: "true"
         }
     })

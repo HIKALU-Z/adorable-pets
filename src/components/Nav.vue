@@ -38,8 +38,8 @@
                 </div>
 
                 <div class="navbar-end">
-                    <router-link to="/login" class="navbar-item">
-                        登录
+                    <router-link to="/me/setting" class="navbar-item">
+                        Account-Center
                     </router-link>
                     <router-link to="/signup" class="navbar-item">
                         注册
