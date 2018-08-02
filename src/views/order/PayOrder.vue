@@ -2,12 +2,14 @@
   <div>
     <section class="section is-medium">
       <div class="columns" v-if="order.pay_by=='wechat'">
-        <div class="column  box is-2 is-offset-5">
+        <div class="column box is-2 is-offset-5">
           <h2 class="has-text-centered">微信支付</h2>
           <img :src="payment_url" alt="qrcode">
         </div>
-        <div class="column is-2 is-offset-5 has-text-centered">
-          <button class="button is-primary" @click="handleVerify">完成支付</button>
+      </div>
+      <div class="columns" v-if="order.pay_by=='wechat'">
+        <div class="column is-2 is-offset-5">
+          <button style="width:100%" class="button is-primary" @click="handleVerify">完成支付</button>
         </div>
       </div>
       <div class="columns" v-else>
@@ -24,7 +26,7 @@ import api from "./../../api";
 import { url } from "./../../utils/url.js";
 export default {
   mounted() {
-    this.order_id = this.$route.query.id;
+    this.order_id = this.$route.params.oid;
     this.getOrderInfo(this.order_id);
   },
   data() {
@@ -36,10 +38,23 @@ export default {
     };
   },
   methods: {
-    getOrderInfo(id) {
-      api("order/find", { id }).then(r => {
-        this.order = r.data;
+    getOrderInfo(order_id) {
+      api("order/first", { where: { oid: order_id } }).then(r => {
+        const order = (this.order = r.data);
         console.log(this.order);
+        // 如果没有查询结果，说明订单号不正确
+        if (!order) {
+          alert("订单号有误");
+          this.goToUserOdrerPage();
+          return;
+        }
+        // 如果订单已经完成支付，那么不需要进行额外的任何操作
+        if (order._paid) {
+          alert("此订单已支付");
+          this.goToUserOdrerPage();
+          return;
+        }
+        // 获取支付地址
         this.getPaymentUrl(
           this.order.id,
           this.order.pay_by,
@@ -71,9 +86,16 @@ export default {
       api("order/find", {
         id: this.order.id
       }).then(r => {
-        if (r.data._paid) alert("支付成功");
-        else alert("支付失败");
+        if (r.data._paid) {
+          alert("支付成功");
+          this.goToUserOdrerPage();
+        } else {
+          alert("支付失败");
+        }
       });
+    },
+    goToUserOdrerPage() {
+      this.$router.push("/me/order");
     }
   }
 };

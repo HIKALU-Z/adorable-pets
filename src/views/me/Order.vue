@@ -1,36 +1,40 @@
 <template>
-    <div class="card content">
-        <div class="table">
-            <table>
-                <thead>
-                    <th>订单号</th>
-                    <th>总价</th>
-                    <th>已付款</th>
-                    <th>产品信息</th>
-                    <th>操作</th>
-                </thead>
-                <tbody>
-                    <tr v-for="row in list" :key='row.oid'>
-                        <td>{{row.oid || '-'}}</td>
-                        <td>{{row.sum || 0}}</td>
-                        <td>{{row._paid ? '是' : '否'}}</td>
-                        <td>
-                            <span @click="show_detail(row)" class="anchor">详情</span>
-                        </td>
-                        <td>
-                            <div>
-                                <div v-if="!row._paid">
-                                    <router-link :to="`/pay/${row.oid}`" class="btn-small">付款</router-link>
-                                    <span @click="cancel(row.id)" class="anchor btn-small">取消订单</span>
-                                </div>
-                                <div v-else>-</div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <div class="card content">
+    <div class="table">
+      <table>
+        <thead>
+          <th>订单号</th>
+          <th>总价</th>
+          <th>已付款</th>
+          <th>产品信息</th>
+          <th>操作</th>
+        </thead>
+        <tbody>
+          <tr v-for="row in list" :key='row.oid'>
+            <td>
+              <router-link :to="`/order/pay/${row.oid}`">
+                {{row.oid || '-'}}
+              </router-link>
+            </td>
+            <td>{{row.sum || 0}}</td>
+            <td>{{row._paid ? '是' : '否'}}</td>
+            <td>
+              <span @click="show_detail(row)" class="anchor">详情</span>
+            </td>
+            <td>
+              <div>
+                <div v-if="!row._paid">
+                  <router-link :to="`/pay/${row.oid}`" class="btn-small">付款</router-link>
+                  <span @click="cancel(row.id)" class="anchor btn-small">取消订单</span>
+                </div>
+                <div v-else>-</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </template>
 
 <script>
@@ -51,7 +55,10 @@ export default {
   methods: {
     read() {
       api("order/read", {
-        with: "has_one:pet",
+        with: {
+          relation: "has_one",
+          model: "pet"
+        },
         where: { user_id: session.his_id() }
       }).then(r => {
         this.list = r.data;
