@@ -3,14 +3,18 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import iView from "iview";
+import VueAwesomeSwiper from "vue-awesome-swiper";
 import "iview/dist/styles/iview.css";
 import "bulma";
 // import "./../node_modules/material-design-icons/iconfont/material-icons.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+// 引入 swiper css
+import "swiper/dist/css/swiper.css";
 
 Vue.config.productionTip = false;
 Vue.use(iView);
+Vue.use(VueAwesomeSwiper);
 
 /**
  * 切换 body 上的 class 以方便 Nav fixed 作用时生成一个脱离文档流的间距

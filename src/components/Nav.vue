@@ -38,12 +38,12 @@
                 </div>
 
                 <div class="navbar-end">
-                    <router-link to="/me/setting" class="navbar-item">
-                        Account-Center
+                    <router-link to="/me/setting" class="navbar-item account-name">
+                        {{accountname}}
                     </router-link>
-                    <router-link to="/signup" class="navbar-item">
+                    <!-- <router-link to="/signup" class="navbar-item">
                         注册
-                    </router-link>
+                    </router-link> -->
                     <!-- <div class="navbar-item">
                        
                     </div> -->
@@ -55,9 +55,17 @@
 
 <script>
 import bulmaUtils from "./../utils/bulma";
+import session from "./../utils/session.js";
 export default {
   mounted() {
+    // this.accountname = session.uinfo().username || "Account-Center";
+    // console.log(session.uinfo());
     bulmaUtils.DOMloaded();
+  },
+  data() {
+    return {
+      accountname: session.uinfo().username || "Account-Center"
+    };
   }
 };
 </script>
@@ -65,5 +73,8 @@ export default {
 <style scoped>
 nav {
   box-shadow: 0 1px 1px rgba(10, 10, 15, 0.2);
+}
+.account-name {
+  font-weight: bold;
 }
 </style>

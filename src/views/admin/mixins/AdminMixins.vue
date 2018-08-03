@@ -9,6 +9,7 @@ export default {
       current: {}, // 当前的对象
       currentPage: 1, // 当前读取的页数
       timer: 0, // 为 debouce 函数设置的计时器
+      with: {}, // 调用 read 方法时传递的参数，方便同时读取其他的关系型数据
       // 管理页面的表头
       columnsConfig: [
         {
@@ -111,7 +112,9 @@ export default {
      * 读取当前 model 列表
      */
     read() {
-      api(`${this.model}/read`, this.current).then(r => {
+      api(`${this.model}/read`, {
+        with: this.with
+      }).then(r => {
         this.list = r.data;
       });
     }

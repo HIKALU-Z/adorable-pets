@@ -4,7 +4,7 @@
 
         <section>
             <div class="picture-container">
-                <div class="picture-main">
+                <div class="picture-main" :style="`backgroundImage:url('${current.cover_url}')`">
                     <button class="button is-parent btn-save">
                         <span class="icon has-text-info">
                             <!-- <i class="fas fa-home"></i> -->
@@ -31,11 +31,22 @@
                 <!-- <img src="./../assets/img/cat/miao-10.jpg" alt="cat"> -->
             </div>
         </section>
-
+        <Carousel v-model="step" loop>
+            <CarouselItem>
+                <figure class="demo-carousel image is-3by2">
+                    <img :src="'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
+                </figure>
+            </CarouselItem>
+            <CarouselItem>
+                <figure class="demo-carousel image is-3by2">
+                    <img :src="'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
+                </figure>
+            </CarouselItem>
+        </Carousel>
         <section class="section">
             <div class="columns">
                 <div class="column is-8">
-                    <h1 class="title">猫咪，小奶猫，美短，英短，布偶!</h1>
+                    <h1 class="title">{{current.title}}</h1>
                     <hr>
                     <div class="columns">
                         <div class="column is-3 card">年龄</div>
@@ -55,7 +66,7 @@
                 </div>
                 <div class="column is-4">
                     <div class="box">
-                        <h2 class="title">This is a Persian cat!
+                        <h2 class="title">This is a {{ current.$bread && current.$breed.name || "cute"}} {{ current.$category && current.$category.name}}!
                         </h2>
                         <p class="subtitle mdi mdi-currency-cny">1000
                         </p>
@@ -70,6 +81,7 @@
 </template>
 
 <script>
+import api from "../api";
 const Nav = () =>
   import(/* webpackChunkName: "group-Detail" */ "./../components/Nav.vue");
 const Footer = () =>
@@ -79,19 +91,38 @@ export default {
     Nav,
     Footer
   },
+  mounted() {
+    this.getDetialInfo();
+  },
   data() {
     return {
-      current: {
-        pet_id: 1
-      }
+      step: 0,
+      current: {}
     };
   },
   methods: {
+    getDetialInfo() {
+      api("pet/find", {
+        id: this.$route.params.id,
+        with: [
+          {
+            relation: "has_one",
+            model: "breed"
+          },
+          {
+            relation: "has_one",
+            model: "category"
+          }
+        ]
+      }).then(r => {
+        this.current = r.data;
+      });
+    },
     handleGo(query) {
       console.log(this.$router);
       //   return;
-      this.$router.push("/order/new");
-      this.$router.replace({ query });
+      this.$router.push({ path: "/order/new", query });
+      //   this.$router.replace({ query });
     }
   }
 };

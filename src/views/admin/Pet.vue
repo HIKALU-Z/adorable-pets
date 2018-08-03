@@ -36,14 +36,15 @@
         <FormItem label="封面照片" prop="cover_url">
           <Input v-model="current.cover_url" placeholder="请输入封面照片地址"></Input>
         </FormItem>
-        <FormItem label="品牌" prop="breed">
-          <Select v-model="current.breed" filterable  :remote-method="remoteMethod" :loading="loading" placeholder="请输入关键字以选择品牌">
-            <Option v-for="(option, index) in options" :value="option.value" :key="index">{{option.label}}</Option>
+        <FormItem label="品种" prop="breed_id">
+          <Select v-model="current.breed_id" filterable :remote-method="getBreedList" :loading="loading" placeholder="请输入关键字以选择品种">
+            <Option v-for="(option, index) in breedOptions" :value="option.value" :key="index">{{option.label}}</Option>
           </Select>
         </FormItem>
-
         <FormItem label="种类" prop="category_id">
-          <Input v-model="current.category_id" placeholder="请输入种类"></Input>
+          <Select v-model="current.category_id" filterable :remote-method="getCategoryList" :loading="loading" placeholder="请输入关键字以选择品牌">
+            <Option v-for="(option, index) in categoryOptions" :value="option.value" :key="index">{{option.label}}</Option>
+          </Select>
         </FormItem>
         <FormItem label="是否绝育" prop="neuter">
           <RadioGroup v-model="current.neuter">
@@ -89,6 +90,7 @@
 // import api from "./../../api/";
 
 import AdminMixinsVue from "./mixins/AdminMixins.vue";
+import api from "./../../api";
 export default {
   mixins: [AdminMixinsVue],
   data() {
@@ -97,18 +99,29 @@ export default {
       current: {},
       currentPage: 1,
       loading: false,
-      options: [],
-      dataList: ["a", "b", "c"],
+      categoryOptions: [],
+      breedOptions: [],
+      with: { relation: "has_one", model: "breed" },
       columnsConfig: [
         {
           title: "标题",
           key: "title",
           fixed: "left",
-          width: 120
+          width: 140
         },
         {
-          title: "描述",
-          key: "description",
+          title: "价格",
+          key: "price",
+          width: 80
+        },
+        {
+          title: "分类",
+          key: "category_id",
+          width: 80
+        },
+        {
+          title: "品种",
+          key: "$breed",
           width: 100
         },
         {
@@ -180,25 +193,40 @@ export default {
     };
   },
   methods: {
-    // 搜索远程数据
-    remoteMethod(query) {
-      if (query !== "") {
-        this.loading = true;
-        setTimeout(() => {
+    // 搜索远程数据 category
+    getCategoryList(query) {
+      this.loading = true;
+
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        api(`category/search`, { or: { name: query } }).then(r => {
           this.loading = false;
-          const list = this.dataList.map(item => {
+          this.categoryOptions = r.data.map(item => {
             return {
-              value: item,
-              label: item
+              value: item.id,
+              label: item.name
             };
           });
-          this.options = list.filter(
-            item => item.label.toLowerCase().indexOf(query.toLowerCase()) > -1
-          );
-        }, 200);
-      } else {
-        this.options = [];
-      }
+        });
+      }, 300);
+    },
+    getBreedList(query) {
+      this.loading = true;
+
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        api(`breed/search`, { or: { name: query } }).then(r => {
+          this.loading = false;
+          this.breedOptions = r.data.map(item => {
+            return {
+              value: item.id,
+              label: item.name
+            };
+          });
+        });
+      }, 300);
     }
   }
 };

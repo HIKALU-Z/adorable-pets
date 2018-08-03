@@ -1,57 +1,93 @@
 <template>
-    <div>
-        <section class="section">
-            <div class="container">
-                <!-- first-tile -->
-                <div class="columns is-multiline">
-                    <div class="column is-4" v-for="(item, index) in 7" :key="index">
-                        <router-link :to="'/detail/'+item" tag="article" class="card">
-                            <div class="card-image">
-                                <figure class="image is-16by9">
-                                    <img src="./../assets/img/cat/miao-4.jpg" alt="">
-                                </figure>
-                            </div>
-
-                            <div class="card-content">
-                                <i class="mdi mdi-currency-cny">188</i>
-                                <Rate style="float:right;clear:both" disabled v-model="value"></Rate>
-                                <!-- <div class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-48x48">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <p class="title is-4">John Smith</p>
-                                        <p class="subtitle is-6">@johnsmith</p>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <div class="card-footer">
-                                <div class="card-footer-item">
-                                    <i class="mdi mdi-map-marker"></i>南京
-                                </div>
-                                <!-- <div class="card-footer-item">B</div> -->
-                            </div>
-                        </router-link>
-                    </div>
+  <div>
+    <section class="section">
+      <div class="container">
+        <div class="category-container" v-for="category in categoryList" :key="category.name">
+          <h1 class="title">{{category.name}}</h1>
+          <!-- <p>{{category.$pet}}</p> -->
+          <div class="columns is-multiline">
+            <div class="column is-4" v-for="pet in category.$pet" :key="pet.id">
+              <router-link :to="'/detail/'+pet.id" tag="article" class="card">
+                <div class="card-image">
+                  <figure class="image is-3by2">
+                    <img :src="pet.cover_url || 'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
+                  </figure>
                 </div>
-            </div>
-        </section>
-    </div>
-</template>
 
+                <div class="card-content">
+                  <h3>{{pet.title}}</h3>
+                  <i class="mdi mdi-currency-cny">{{pet.price*300}}</i>
+                  <Rate style="float:right;clear:both" disabled v-model="starValue"></Rate>
+                </div>
+                <div class="card-footer">
+                  <div class="card-footer-item">
+                    <i class="mdi mdi-map-marker"></i>南京
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</template>
 <script>
+import api from "../api";
 export default {
+  mounted() {
+    this.read();
+    this.getCategoryList();
+  },
   data() {
     return {
-      value: 5
+      step: 0,
+      petList: [],
+      categoryList: [],
+      starValue: 5,
+      swiperOption: {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      }
     };
+  },
+  methods: {
+    read() {
+      api("pet/read").then(r => {
+        this.petList = r.data;
+      });
+    },
+    getCategoryList() {
+      api("category/read", {
+        with: { relation: "has_many", model: "pet" }
+      }).then(r => {
+        this.categoryList = r.data;
+        console.log("cat", r.data);
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.category-container {
+  h1 {
+    margin-top: 1.5rem;
+    &:first {
+      margin-top: 0;
+    }
+  }
+}
 .card {
   cursor: pointer;
   transition: all 0.5s ease-in-out;
@@ -64,5 +100,13 @@ export default {
   .content {
     padding: 8px 16px;
   }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+.img-container {
+  background-size: cover;
+  background-position: center;
 }
 </style>

@@ -23,7 +23,7 @@
                 type: 'float'
             },
             character: {
-                type: 'string'
+                type: 'text'
             },
             birthday: {
                 type: 'date'
@@ -54,6 +54,14 @@
         }
     };
 
+    // api('PROPERTY/UPDATE', {
+    //     key: 'cover_url',
+    //     model: 'pet',
+    //     structure: {
+    //         type: 'text'
+    //     }
+    // })
+
     // api('MODEL/CREATE_PROPERTY', {
     //   model     : 'appo',
     //   property  : 'phone',
@@ -77,7 +85,24 @@
     //   },
     // });
 
-    api('MODEL/CREATE', model);
+    // 创造 猫 mocker 的能力
+    // api('MODEL/ATTACH_MOCK', {
+    //     key: 'pet',
+
+    //     mock: {
+    //         price: {
+    //             mocker: 'randomDigit'
+    //         },
+    //         title: {
+    //             mocker: 'sentence'
+    //         },
+    //     },
+    // });
+
+    // api('pet/seed', {
+    //     amount: 20
+    // })
+    // api('MODEL/CREATE', model);
 
     // api('MODEL/FIND', { name : 'appo' });
 
