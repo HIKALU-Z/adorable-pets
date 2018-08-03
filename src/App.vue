@@ -1,30 +1,14 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <!-- <Nav></Nav> -->
-    <!-- <Hero/> -->
     <router-view/>
-    <!-- <Footer></Footer> -->
+    <BackTop></BackTop>
   </div>
 </template>
 
 
 <script>
-// const Hero = () => import(/* webpackChunkName: "group-App" */ "./components/Hero.vue");
-// const Nav = () => import(/* webpackChunkName: "group-App" */ "./components/Nav.vue");
-// const Footer = () => import(/* webpackChunkName: "group-App" */ "./components/Footer.vue");
-// import Hero from "./components/Hero";
-// import Nav from "./components/Nav";
-// import Footer from "./components/Footer";
 export default {
-  components: {
-    // Nav,
-    // Hero,
-    // Footer
-  }
+  components: {}
 };
 </script>
 

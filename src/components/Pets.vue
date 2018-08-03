@@ -72,7 +72,6 @@ export default {
         with: { relation: "has_many", model: "pet" }
       }).then(r => {
         this.categoryList = r.data;
-        console.log("cat", r.data);
       });
     }
   }

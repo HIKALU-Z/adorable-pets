@@ -1,7 +1,6 @@
 <template>
     <div>
         <Nav></Nav>
-
         <section>
             <div class="picture-container">
                 <div class="picture-main" :style="`backgroundImage:url('${current.cover_url}')`">
@@ -31,7 +30,7 @@
                 <!-- <img src="./../assets/img/cat/miao-10.jpg" alt="cat"> -->
             </div>
         </section>
-        <Carousel v-model="step" loop>
+        <!-- <Carousel v-model="step" loop>
             <CarouselItem>
                 <figure class="demo-carousel image is-3by2">
                     <img :src="'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
@@ -42,7 +41,7 @@
                     <img :src="'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
                 </figure>
             </CarouselItem>
-        </Carousel>
+        </Carousel> -->
         <section class="section">
             <div class="columns">
                 <div class="column is-8">
@@ -70,40 +69,53 @@
                         </h2>
                         <p class="subtitle mdi mdi-currency-cny">1000
                         </p>
-                        <button class="button is-primary" @click="handleGo(current)">Payme </button>
+                        <button v-if="!isInCart" class="button is-default" @click="handleAddToCart">加入购物车</button>
+                        <button v-else class="button is-default" disabled>已加入购物车</button>
+                        <button v-if="!isInCart" class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
                     </div>
                 </div>
             </div>
         </section>
-
+        <ToolBar></ToolBar>
         <Footer></Footer>
     </div>
 </template>
 
 <script>
 import api from "../api";
+import session from "../utils/session";
 const Nav = () =>
   import(/* webpackChunkName: "group-Detail" */ "./../components/Nav.vue");
 const Footer = () =>
   import(/* webpackChunkName: "group-Detail" */ "./../components/Footer.vue");
+const ToolBar = () =>
+  import(/* webpackChunkName: "group-Detail" */ "./../components/ToolBar.vue");
 export default {
   components: {
     Nav,
+    ToolBar,
     Footer
   },
   mounted() {
-    this.getDetialInfo();
+    this.pet_id = this.$route.params.id;
+    this.getDetailInfo();
+    this.getCartInfo();
   },
   data() {
     return {
       step: 0,
-      current: {}
+      pet_id: null,
+      current: {},
+      count: 1,
+      user_id: session.his_id(),
+      cartList: [],
+      isInCart: false // 判断当前宠物是否在购物车内,默认不在宠物车内
     };
   },
   methods: {
-    getDetialInfo() {
+    getDetailInfo() {
       api("pet/find", {
-        id: this.$route.params.id,
+        id: this.pet_id,
         with: [
           {
             relation: "has_one",
@@ -118,11 +130,38 @@ export default {
         this.current = r.data;
       });
     },
+    getCartInfo() {
+      api("cart/read", { where: { user_id: this.user_id } }).then(r => {
+        this.cartList = r.data;
+        this.checkPetExist();
+        // console.log(r);
+      });
+    },
+    checkPetExist() {
+      this.cartList.forEach(item => {
+        console.log("item:", item.pet_id);
+        console.log("current:", this.pet_id);
+
+        if (item.pet_id == this.current.id) {
+          console.log("id", this.current.id);
+          this.isInCart = true;
+        }
+      });
+    },
     handleGo(query) {
       console.log(this.$router);
       //   return;
       this.$router.push({ path: "/order/new", query });
       //   this.$router.replace({ query });
+    },
+    handleAddToCart() {
+      api("cart/create", {
+        user_id: this.user_id,
+        pet_id: this.current.id,
+        count: this.count
+      }).then(r => {
+        console.log(r);
+      });
     }
   }
 };
