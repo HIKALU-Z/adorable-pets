@@ -61,7 +61,7 @@ export default {
 .toolbar-container {
   position: fixed;
   background-color: #f0f0f0;
-  padding: 20px;
+  // padding: 20px;
   width: 400px;
   right: -400px;
   top: 52px;

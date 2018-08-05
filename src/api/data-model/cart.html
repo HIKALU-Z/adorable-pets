@@ -19,7 +19,14 @@
             },
         },
     };
-    api('MODEL/CREATE', model);
+
+    api('cart/create', {
+        user_id: 6,
+        pet_id: 4,
+        count: 1
+    })
+
+    // api('MODEL/CREATE', model);
     // api('MODEL/CREATE_PROPERTY', {
     //   model     : 'appo',
     //   property  : 'phone',
@@ -43,7 +50,14 @@
     //   },
     // });
 
-    api('MODEL/CREATE', model);
+    // api('MODEL/CREATE', model);
+
+
+    // api('cart/delete', {
+    //     id: 1
+    // }).then(r => {
+    //     console.log(r.success)
+    // })
 
     // api('MODEL/FIND', { name : 'appo' });
 

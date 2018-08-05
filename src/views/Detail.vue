@@ -1,36 +1,36 @@
 <template>
-    <div>
-        <Nav></Nav>
-        <section>
-            <div class="picture-container">
-                <div class="picture-main" :style="`backgroundImage:url('${current.cover_url}')`">
-                    <button class="button is-parent btn-save">
-                        <span class="icon has-text-info">
-                            <!-- <i class="fas fa-home"></i> -->
-                            <!-- <i class="material-icons">heart</i> -->
-                            <i class="mdi mdi-heart-outline"></i>
-                        </span>
-                        <span>收藏</span>
-                    </button>
+  <div>
+    <Nav></Nav>
+    <section>
+      <div class="picture-container">
+        <div class="picture-main" :style="`backgroundImage:url('${current.cover_url}')`">
+          <button class="button is-parent btn-save">
+            <span class="icon has-text-info">
+              <!-- <i class="fas fa-home"></i> -->
+              <!-- <i class="material-icons">heart</i> -->
+              <i class="mdi mdi-heart-outline"></i>
+            </span>
+            <span>收藏</span>
+          </button>
 
-                    <button class="button is-parent btn-share">
-                        <span class="icon has-text-info">
-                            <i class="mdi mdi-share"></i>
-                        </span>
-                        <span>分享</span>
-                    </button>
+          <button class="button is-parent btn-share">
+            <span class="icon has-text-info">
+              <i class="mdi mdi-share"></i>
+            </span>
+            <span>分享</span>
+          </button>
 
-                    <button class="button is-parent btn-view">
-                        <span class="icon has-text-info">
-                            <i class="mdi mdi-image-multiple"></i>
-                        </span>
-                        <span>查看照片</span>
-                    </button>
-                </div>
-                <!-- <img src="./../assets/img/cat/miao-10.jpg" alt="cat"> -->
-            </div>
-        </section>
-        <!-- <Carousel v-model="step" loop>
+          <button class="button is-parent btn-view">
+            <span class="icon has-text-info">
+              <i class="mdi mdi-image-multiple"></i>
+            </span>
+            <span>查看照片</span>
+          </button>
+        </div>
+        <!-- <img src="./../assets/img/cat/miao-10.jpg" alt="cat"> -->
+      </div>
+    </section>
+    <!-- <Carousel v-model="step" loop>
             <CarouselItem>
                 <figure class="demo-carousel image is-3by2">
                     <img :src="'http://img5.imgtn.bdimg.com/it/u=167640062,1078515027&fm=27&gp=0.jpg '" alt="cat image">
@@ -42,43 +42,43 @@
                 </figure>
             </CarouselItem>
         </Carousel> -->
-        <section class="section">
-            <div class="columns">
-                <div class="column is-8">
-                    <h1 class="title">{{current.title}}</h1>
-                    <hr>
-                    <div class="columns">
-                        <div class="column is-3 card">年龄</div>
-                        <div class="column is-3 card">纯种</div>
-                        <div class="column is-3 card">性别</div>
-                        <div class="column is-3 card">防疫</div>
-                    </div>
-                    <hr>
-                    <div>
-                        1234
-                    </div>
-                    <hr>
-                    <div>
-                        1234
-                    </div>
-                    <hr>
-                </div>
-                <div class="column is-4">
-                    <div class="box">
-                        <h2 class="title">This is a {{ current.$bread && current.$breed.name || "cute"}} {{ current.$category && current.$category.name}}!
-                        </h2>
-                        <p class="subtitle mdi mdi-currency-cny">1000
-                        </p>
-                        <button v-if="!isInCart" class="button is-default" @click="handleAddToCart">加入购物车</button>
-                        <button v-else class="button is-default" disabled>已加入购物车</button>
-                        <button v-if="!isInCart" class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <ToolBar></ToolBar>
-        <Footer></Footer>
-    </div>
+    <section class="section">
+      <div class="columns">
+        <div class="column is-8">
+          <h1 class="title">{{current.title}}</h1>
+          <hr>
+          <div class="columns">
+            <div class="column is-3 card">年龄</div>
+            <div class="column is-3 card">纯种</div>
+            <div class="column is-3 card">性别</div>
+            <div class="column is-3 card">防疫</div>
+          </div>
+          <hr>
+          <div>
+            1234
+          </div>
+          <hr>
+          <div>
+            1234
+          </div>
+          <hr>
+        </div>
+        <div class="column is-4">
+          <div class="box">
+            <h2 class="title">This is a {{ current.$bread && current.$breed.name || "cute"}} {{ current.$category && current.$category.name}}!
+            </h2>
+            <p class="subtitle mdi mdi-currency-cny">1000
+            </p>
+            <button v-if="!isInCart" class="button is-default" @click="handleAddToCart">加入购物车</button>
+            <button v-if="isInCart" class="button is-default" disabled>已加入购物车</button>
+            <button v-if="!isInCart" class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <ToolBar></ToolBar>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script>
@@ -96,10 +96,12 @@ export default {
     ToolBar,
     Footer
   },
-  mounted() {
+  created() {
     this.pet_id = this.$route.params.id;
+    this.checkPetExist();
+  },
+  mounted() {
     this.getDetailInfo();
-    this.getCartInfo();
   },
   data() {
     return {
@@ -130,38 +132,35 @@ export default {
         this.current = r.data;
       });
     },
-    getCartInfo() {
-      api("cart/read", { where: { user_id: this.user_id } }).then(r => {
-        this.cartList = r.data;
-        this.checkPetExist();
-        // console.log(r);
-      });
-    },
     checkPetExist() {
-      this.cartList.forEach(item => {
+      this.$store.state.cart.cartList.forEach(item => {
         console.log("item:", item.pet_id);
         console.log("current:", this.pet_id);
 
-        if (item.pet_id == this.current.id) {
+        if (item.pet_id == this.pet_id) {
           console.log("id", this.current.id);
           this.isInCart = true;
         }
       });
     },
     handleGo(query) {
-      console.log(this.$router);
-      //   return;
       this.$router.push({ path: "/order/new", query });
-      //   this.$router.replace({ query });
     },
     handleAddToCart() {
-      api("cart/create", {
+      let obj = {
         user_id: this.user_id,
-        pet_id: this.current.id,
+        pet_id: this.pet_id,
         count: this.count
-      }).then(r => {
-        console.log(r);
+      };
+      let hasSamePet;
+      this.$store.state.cart.cartList.forEach(item => {
+        if (item.pet_id == this.pet_id) {
+          hasSamePet = true;
+        }
       });
+      if (!hasSamePet) {
+        this.$store.dispatch("cart/addItemToCart", obj);
+      }
     }
   }
 };
