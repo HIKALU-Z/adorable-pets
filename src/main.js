@@ -37,9 +37,11 @@ const $toggleBodyClassList = function(flag) {
  * - 如果有 meta 信息那么获取 meta.title
  */
 router.beforeEach((to, from, next) => {
+  // 如果 meta 信息不为空，那么填充 meta 信息
   if (to.meta.title !== undefined) {
     document.title = to.meta.title;
   }
+  // 如果所前往的页面有个别元素不需要 fixed 至顶部，修改 body 的样式
   if (
     to.fullPath.startsWith("/admin/") ||
     to.fullPath.startsWith("/signup") ||

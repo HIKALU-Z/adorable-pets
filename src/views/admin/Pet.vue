@@ -202,6 +202,9 @@ export default {
       this.timer = setTimeout(() => {
         api(`category/search`, { or: { name: query } }).then(r => {
           this.loading = false;
+          if (r.data === null) {
+            return;
+          }
           this.categoryOptions = r.data.map(item => {
             return {
               value: item.id,
