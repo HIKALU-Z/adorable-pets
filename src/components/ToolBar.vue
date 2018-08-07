@@ -1,19 +1,19 @@
 <template>
-    <div>
-        <div :class="[ 'toolbar-container',isCartActive ? 'active' : '' ]">
-            <SideCart></SideCart>
-            <!-- <div class="mask" v-if="isCartActive"></div> -->
-            <ul class="toolbar-list">
-                <li class="toolbar-item" @click="isCartActive=!isCartActive">
-                    <i class="mdi mdi-cart-outline"></i>
-                    <span class="toolbar-content">购物车</span>
-                    <!-- couwuche -->
-                    <!-- <span class="toolbar-content">购物车</span> -->
-                </li>
-            </ul>
-        </div>
-
+  <div>
+    <div :class="[ 'toolbar-container',isCartActive ? 'active' : '' ]">
+      <SideCart></SideCart>
+      <!-- <div class="mask" v-if="isCartActive"></div> -->
+      <ul class="toolbar-list">
+        <li class="toolbar-item" @click="switchCart">
+          <i class=" mdi mdi-cart-outline "></i>
+          <span class="toolbar-content ">购物车</span>
+          <!-- couwuche -->
+          <!-- <span class="toolbar-content ">购物车</span> -->
+        </li>
+      </ul>
     </div>
+
+  </div>
 </template>
 
 <script>
@@ -23,7 +23,23 @@ export default {
   components: {
     SideCart
   },
-  methods: {},
+  mounted() {
+    this.globalClick(this.hideCart);
+  },
+  methods: {
+    hideCart(e) {
+      let inBoundry = e.target.closest(".toolbar-container");
+      if (inBoundry) {
+        return;
+      }
+      if (this.isCartActive == true) {
+        this.isCartActive = false;
+      }
+    },
+    switchCart() {
+      this.isCartActive = !this.isCartActive;
+    }
+  },
   data() {
     return {
       isCartActive: false

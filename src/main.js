@@ -54,6 +54,11 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+//页面全局点击
+Vue.prototype.globalClick = function(callback) {
+  document.addEventListener("click", callback);
+};
+
 new Vue({
   router,
   store,

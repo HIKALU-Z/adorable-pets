@@ -13,13 +13,19 @@
               </div>
               <figure class="image is-3by2">
                 <img :src="item.cover_url || 'https://dummyimage.com/600x400/cccccc/ffffff.png'" alt="">
+                <div class="pet-desc">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit optio vel, magnam, veniam reiciendis vitae blanditiis ratione eligendi iure, ullam eaque? Necessitatibus suscipit eaque voluptatem tempore facere ex quisquam ea!
+                </div>
               </figure>
+
             </article>
             <!-- {{item}} -->
           </div>
         </div>
       </div>
-
+      <div class="has-text-centered">
+        <Page :total="petTotal" :page-size="8" :current="currentPage" show-elevator @on-change="handlePageChange"></Page>
+      </div>
     </section>
 
     <Footer></Footer>
@@ -27,7 +33,7 @@
 </template>
 
 <script>
-import api from "../api";
+// import api from "../api";
 import { mapState } from "vuex";
 const Nav = () =>
   import(/* webpackChunkName: "group-Detail" */ "./../components/Nav.vue");
@@ -43,9 +49,6 @@ export default {
   created() {
     this.$store.dispatch("pet/getPetList");
   },
-  mounted() {
-    this.search();
-  },
   data() {
     return {
       keyword: "",
@@ -55,32 +58,47 @@ export default {
   },
   computed: {
     ...mapState({
-      petList: state => state.pet.petList
+      petList: state => state.pet.petList,
+      petTotal: state => state.pet.total,
+      currentPage: state => state.pet.currentPage
     })
   },
   methods: {
-    search(keyword) {
-      let query = `where("title" contains "${keyword}" ) `;
-      let f = this.filter;
-      f.category_id && (query += ` and "category_id" = ${f.category_id} `);
-      f.breed_id && (query += ` and "breed_id" = ${f.breed_id} `);
-      f.color_id && (query += ` and "color_id" = ${f.color_id} `);
-      f.character_id && (query += ` and "character_id" = ${f.character_id} `);
-
-      api("cart/read", {}).then(r => {
-        this.result = r.data || [];
-      });
+    handlePageChange(index) {
+      this.$store.dispatch("pet/searchPetList", { page: index });
     }
   }
 };
 </script>
 
 <style scoped>
+.box figure {
+  position: relative;
+}
 .pet-title {
   height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.pet-desc {
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: absolute;
+  /* top: 104px; */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #ffffff;
+  padding: 5px;
+  font-size: 1rem;
+  line-height: 1.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+article:hover .pet-desc {
+  opacity: 1;
 }
 .box-title {
   font-size: 1.4rem;

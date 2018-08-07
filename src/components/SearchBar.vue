@@ -78,9 +78,6 @@ export default {
     };
   },
   computed: {
-    // petList() {
-    //   return this.$store.state.pet.petList;
-    // },
     ...mapState({
       petList: state => state.pet.petList
     })
@@ -97,6 +94,9 @@ export default {
         this.showFrom = false;
       }
     },
+    /**
+     * 切换表单显示与否
+     */
     switchForm(id) {
       if (this.showFrom == id) {
         this.showFrom = 0;
@@ -116,7 +116,7 @@ export default {
       }"  ${category_query})`;
 
       // console.log(query);
-      this.$store.dispatch("pet/searchPetList", query);
+      this.$store.dispatch("pet/searchPetList", { query, page: 1 });
     }
   },
   watch: {

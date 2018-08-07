@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <h1 class="title">购物车</h1> -->
-    <!-- {{cartList}} -->
-    <!-- <hr> -->
     <div class="check-tool">
       <span>全选</span>
     </div>
@@ -56,7 +53,6 @@ export default {
   created() {
     this.$store.dispatch("cart/getCartList", this.user_id);
   },
-  mounted() {},
   methods: {
     removeItem(id) {
       this.$store.dispatch("cart/removeCartItem", id);
