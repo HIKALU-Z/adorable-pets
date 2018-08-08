@@ -3,10 +3,17 @@
     <section class="section">
       <div class="container">
         <div class="category-container" v-for="category in categoryList" :key="category.name">
-          <h1 class="title">{{category.name}}</h1>
-          <!-- <p>{{category.$pet}}</p> -->
+          <div class="level">
+            <div class="level-right">
+              <h2 class="title">{{category.name}}</h2>
+            </div>
+            <div class="level-left">
+              <router-link :to="`search?breed_id=${item.id}`" class="breed" v-for="item in category.$breed" :key="item.name">{{item.name}}</router-link>
+            </div>
+          </div>
+
           <div class="columns is-multiline">
-            <div class="column is-4" v-for="pet in category.$pet" :key="pet.id">
+            <div class="column is-3" v-for="pet in category.$pet" :key="pet.id">
               <router-link :to="'/detail/'+pet.id" tag="article" class="card">
                 <div class="card-image">
                   <figure class="image is-3by2">
@@ -64,14 +71,17 @@ export default {
   methods: {
     read() {
       api("pet/read").then(r => {
-        this.petList = r.data;
+        this.petList = r.data || [];
       });
     },
     getCategoryList() {
       api("category/read", {
-        with: { relation: "has_many", model: "pet" }
+        with: [
+          { relation: "has_many", model: "pet" },
+          { relation: "has_many", model: "breed" }
+        ]
       }).then(r => {
-        this.categoryList = r.data;
+        this.categoryList = r.data || [];
       });
     }
   }
@@ -80,10 +90,26 @@ export default {
 
 <style lang="scss" scoped>
 .category-container {
-  h1 {
-    margin-top: 1.5rem;
-    &:first {
-      margin-top: 0;
+  .level {
+    margin-top: 20px;
+    border: 1px solid orange;
+    padding: 10px;
+    h2 {
+      cursor: pointer;
+    }
+  }
+  .level:first {
+    margin-top: 0;
+  }
+  .level-left {
+    .breed {
+      display: inline-block;
+      padding: 10px;
+      color: #aaaaaa;
+      cursor: pointer;
+      &:hover {
+        color: #000000;
+      }
     }
   }
 }

@@ -72,7 +72,7 @@ export default {
             return;
           }
 
-          if (unique === "admin" && password === "yoyoyo") {
+          if (unique === "admin" && password === "123123") {
             this.onLoginSucceed({ id: 1, username: "admin", is_admin: true });
             return;
           }

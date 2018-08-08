@@ -28,15 +28,18 @@ const getters = {
 // actions
 const actions = {
   // 获取购物车列表
-  getCartList({ commit }, user_id) {
+  getCartList({ commit }, { user_id = "" }) {
+    if (!user_id) {
+      return;
+    }
     api("cart/read", {
-      where: { user_id: user_id },
+      where: {
+        user_id: user_id
+      },
       with: "has_one:pet"
     }).then(r => {
-      let result = r.data;
-      if (r.data == null) {
-        result = [];
-      }
+      console.log(r);
+      let result = r.data || [];
       commit("setCartItems", result);
     });
   },
@@ -66,7 +69,9 @@ const actions = {
           return;
         }
         api("cart/read", {
-          where: { user_id: user_id },
+          where: {
+            user_id: user_id
+          },
           with: "has_one:pet"
         }).then(r => {
           let result = r.data;

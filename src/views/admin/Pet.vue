@@ -1,9 +1,8 @@
 <template>
-
   <div>
     <div class="level">
       <div class="level-left">
-        <Input v-model="keyword">
+        <Input v-model="keyword" @on-enter="handleSearch" placeholder="输入后按回车搜索">
         <Button slot="append" icon="ios-search"></Button>
         </Input>
       </div>
@@ -100,6 +99,7 @@ export default {
       currentPage: 1,
       loading: false,
       categoryOptions: [],
+      searchable: ["title"],
       breedOptions: [],
       with: { relation: "has_one", model: "breed" },
       columnsConfig: [
@@ -222,6 +222,9 @@ export default {
       this.timer = setTimeout(() => {
         api(`breed/search`, { or: { name: query } }).then(r => {
           this.loading = false;
+          if (r.data == null || r.data.length == 0) {
+            return;
+          }
           this.breedOptions = r.data.map(item => {
             return {
               value: item.id,
@@ -231,6 +234,9 @@ export default {
         });
       }, 300);
     }
+    // handleSearch() {
+
+    // }
   }
 };
 </script>

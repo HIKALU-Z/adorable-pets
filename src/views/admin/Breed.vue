@@ -3,7 +3,7 @@
   <div>
     <div class="level">
       <div class="level-left">
-        <Input v-model="keyword">
+        <Input v-model="keyword" @on-enter="handleSearch" placeholder="输入后按回车搜索">
         <Button slot="append" icon="ios-search"></Button>
         </Input>
       </div>
@@ -19,7 +19,7 @@
           <Input v-model="current.name" placeholder="请输入品种名称"></Input>
         </FormItem>
         <FormItem label="所属种类" prop="category_id">
-          <Select v-model="current.category_id" clearable filterable remote :remote-method="getCategoryList" :loading="loading" placeholder="请输入关键字以选择种类">
+          <Select v-model="current.category_id" clearable filterable remote :remote-method="getCategoryOptions" :loading="loading" placeholder="请输入关键字以选择种类">
             <Option v-for="(option, index) in categoryOptions" :value="option.value" :key="index">{{option.label}}</Option>
           </Select>
         </FormItem>
@@ -111,7 +111,7 @@ export default {
     };
   },
   methods: {
-    getCategoryList(query) {
+    getCategoryOptions(query) {
       this.loading = true;
 
       clearTimeout(this.timer);
@@ -140,6 +140,9 @@ export default {
       });
     },
     getCategoryNameByid(id) {
+      if (!this.categoryListCache || this.categoryListCache.length == 0) {
+        return;
+      }
       let result = this.categoryListCache.filter(item => item.value == id);
       return result[0].label;
     }

@@ -1,3 +1,4 @@
+
 <script>
 import api from "./../../../api";
 export default {
@@ -6,6 +7,7 @@ export default {
       showForm: false, // 展示编辑表格
       list: [], // 各个页面的主要 list
       keyword: "", // 搜索的关键字
+      searchable: ["name"], // 可搜索的所有属性
       current: {}, // 当前的对象
       currentPage: 1, // 当前读取的页数
       timer: 0, // 为 debouce 函数设置的计时器
@@ -106,6 +108,27 @@ export default {
       api(`${this.model}/delete`, { id }).then(() => {
         console.log("this.currentPage:", this.currentPage);
         this.read(this.currentPage);
+      });
+    },
+    /**
+     * 监听 search 事件的触发
+     */
+    handleSearch() {
+      let params = {
+        or: {}
+      };
+      this.searchable.forEach(item => {
+        params.or[item] = this.keyword;
+      });
+      console.log(params);
+      api(`${this.model}/search`, {
+        or: params.or
+      }).then(r => {
+        if (r.data !== null) {
+          this.list = r.data;
+        } else {
+          this.list = [];
+        }
       });
     },
     /**

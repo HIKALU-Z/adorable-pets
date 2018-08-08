@@ -27,6 +27,7 @@ export default {
     this.globalClick(this.hideCart);
   },
   methods: {
+    // 如果在购物车外点击，那么隐藏购物车
     hideCart(e) {
       let inBoundry = e.target.closest(".toolbar-container");
       if (inBoundry) {
@@ -36,6 +37,7 @@ export default {
         this.isCartActive = false;
       }
     },
+    // 切换购物车显示
     switchCart() {
       this.isCartActive = !this.isCartActive;
     }

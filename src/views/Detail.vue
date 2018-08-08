@@ -134,8 +134,8 @@ export default {
     },
     checkPetExist() {
       this.$store.state.cart.cartList.forEach(item => {
-        console.log("item:", item.pet_id);
-        console.log("current:", this.pet_id);
+        // console.log("item:", item.pet_id);
+        // console.log("current:", this.pet_id);
 
         if (item.pet_id == this.pet_id) {
           console.log("id", this.current.id);
@@ -152,6 +152,9 @@ export default {
         pet_id: this.pet_id,
         count: this.count
       };
+      if (!obj.user_id) {
+        alert("尚未登录，请先登录");
+      }
       let hasSamePet;
       this.$store.state.cart.cartList.forEach(item => {
         if (item.pet_id == this.pet_id) {

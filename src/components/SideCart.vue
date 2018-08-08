@@ -7,7 +7,7 @@
       <article class="media" v-for="item in cartList" :key="item.id">
         <figure class="media-left">
           <p class="image is-64x64">
-            <img :src="item.$pet.cover_url">
+            <!-- <img :src="item.$pet.cover_url"> -->
           </p>
         </figure>
         <div class="media-content">
@@ -51,7 +51,8 @@
 import session from "../utils/session";
 export default {
   created() {
-    this.$store.dispatch("cart/getCartList", this.user_id);
+    console.log(this.user_id);
+    this.$store.dispatch("cart/getCartList", { user_id: this.user_id });
   },
   methods: {
     removeItem(id) {
@@ -60,7 +61,7 @@ export default {
   },
   data() {
     return {
-      user_id: session.his_id()
+      user_id: session.his_id() || ""
     };
   },
   computed: {

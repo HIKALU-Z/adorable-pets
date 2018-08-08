@@ -23,7 +23,7 @@ const actions = {
     });
   },
   searchPetList({ commit }, { query = state.query, page = 1 }) {
-    console.log(query, page);
+    console.log("query:", query, "page:", page);
     // return;
     api("pet/read", { query, limit: 8, page }).then(r => {
       let result = r.data || [];

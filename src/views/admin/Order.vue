@@ -3,7 +3,7 @@
   <div>
     <div class="level">
       <div class="level-left">
-        <Input v-model="keyword">
+        <Input v-model="keyword" @on-enter="handleSearch" placeholder="输入后按回车搜索">
         <Button slot="append" icon="ios-search"></Button>
         </Input>
       </div>

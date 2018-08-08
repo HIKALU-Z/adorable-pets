@@ -6,14 +6,14 @@
         <div class="level-left">
           <button class="button" @click="switchForm(1)">分类</button>
           <button class="button" @click="switchForm(2)">品种</button>
-          <button class="button" @click="switchForm(3)">毛色</button>
-          <button class="button" @click="switchForm(4)">脾气</button>
-          <button class="button" @click="switchForm(5)">年龄</button>
-          <button class="button" @click="switchForm(6)">价格</button>
+          <!-- <button class="button" @click="switchForm(3)">毛色</button> -->
+          <!-- <button class="button" @click="switchForm(4)">脾气</button> -->
+          <!-- <button class="button" @click="switchForm(5)">年龄</button> -->
+          <button class="button" @click="switchForm(3)">价格</button>
         </div>
         <div class="level-right">
           <form @submit.prevent="handleSearch" class="search-input">
-            <input type="text" v-model="keyword">
+            <input type="text" v-model="keyword" placeholder="请输入标题搜索萌宠">
             <button type="submit" hidden>submit</button>
           </form>
         </div>
@@ -22,19 +22,23 @@
       <!-- search-form -->
       <div class="search-form-container" v-if="showFrom>0">
         <form class="card search-form" v-if="showFrom == 1">
-          <Select v-model="filter.category" filterable style="width:360px">
-            <Option v-for="item in colorList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Select v-model="filter.category" clearable filterable style="width:360px" placeholder="分类">
+            <Option v-for="item in categoryOptions" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
-          {{filter.category}}
         </form>
 
         <form class="card search-form" v-if="showFrom == 2">
-          <Select v-model="filter.breed" filterable style="width:360px">
-            <Option v-for="item in colorList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Select v-model="filter.breed" clearable filterable style="width:360px" placeholder="品种">
+            <Option v-for="item in breedOptions" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
-          {{filter.breed}}
         </form>
 
+        <form class="card search-form" v-if="showFrom == 3" @submit.prevent="handleSearchByPrice">
+          <input type="number" v-model="price.min" placeholder="最低价">
+          <input type="number" v-model="price.max" placeholder="最高价">
+          <button type="submit" class="button is-primary is-small">确定</button>
+          <!-- {{filter.max}} {{filter.min}} -->
+        </form>
       </div>
     </div>
 
@@ -47,33 +51,32 @@
 
 <script>
 import { mapState } from "vuex";
+import api from "../api";
 export default {
   created() {
     this.$store.dispatch("pet/getPetList");
   },
+  mounted() {
+    this.getModelOptions("breed");
+    this.getModelOptions("category");
+  },
   data() {
     return {
+      timer: 0, // 计数器，用于 filter 改变的 debounce function
       showFrom: false, // 控制是否显示搜索 item 的表单
-      keyword: "",
-      colorList: [
-        {
-          value: "3",
-          label: "汪星人"
-        },
-        {
-          value: "1",
-          label: "喵星人"
-        },
-        {
-          value: "2",
-          label: "赛亚人"
-        }
-      ],
-      model11: "",
-      model12: [],
+      keyword: "", // search keyword
+      categoryOptions: [],
+      breedOptions: [],
+      // main filter when it changes it will trigger search event
       filter: {
         category: "",
-        breed: ""
+        breed: "",
+        min: "",
+        max: ""
+      },
+      price: {
+        min: "",
+        max: ""
       }
     };
   },
@@ -104,19 +107,58 @@ export default {
         this.showFrom = id;
       }
     },
+    getModelOptions(model) {
+      api(`${model}/read`)
+        .then(r => {
+          if (r.data == null) {
+            return;
+          }
+          this[`${model}Options`] = r.data.map(item => {
+            return {
+              value: item.id,
+              label: item.name
+            };
+          });
+        })
+        .catch(err => {
+          throw new Error(err);
+        });
+    },
     handleSearch() {
-      let category_query = "";
+      // 生成 query 条件
+      let categoryQuery = "",
+        breedQuery = "",
+        minPriceQuery = "",
+        maxPriceQuery = "";
+
       let filter = this.filter;
 
       filter.category &&
-        (category_query = ` and "category_id" = ${filter.category} `);
+        (categoryQuery = ` and "category_id" = ${filter.category} `);
+      filter.min && (minPriceQuery = ` and "price" >= ${filter.min}`);
+      filter.max && (maxPriceQuery = ` and "price" <= ${filter.max}`);
+      filter.breed && (breedQuery = ` and "breed_id" = ${filter.breed}`);
 
       let query = `where ("title" contains "${
         this.keyword
-      }"  ${category_query})`;
+      }" ${categoryQuery} ${minPriceQuery} ${maxPriceQuery} ${breedQuery})`;
 
-      // console.log(query);
-      this.$store.dispatch("pet/searchPetList", { query, page: 1 });
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.$store.dispatch("pet/searchPetList", { query, page: 1 });
+      }, 500);
+    },
+    handleSearchByPrice() {
+      let { min = 0, max = 0 } = this.price;
+      min = parseInt(min);
+      max = parseInt(max);
+      if (min > max) {
+        let cache = max;
+        max = min;
+        min = cache;
+      }
+      this.filter.min = min;
+      this.filter.max = max;
     }
   },
   watch: {
@@ -156,9 +198,22 @@ export default {
   background-color: rgba($color: #ffffff, $alpha: 0.5);
   .search-form {
     padding: 10px 20px;
+    input {
+      padding-left: 5px;
+      &:nth-child(2) {
+        margin-left: 10px;
+      }
+      &::-webkit-input-placeholder {
+        color: red;
+      }
+    }
   }
   .search-input {
     float: right;
+    input[type="text"] {
+      width: 360px;
+      padding: 5px 10px;
+    }
   }
 }
 .mask {
