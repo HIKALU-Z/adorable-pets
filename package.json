@@ -13,6 +13,7 @@
     "@mdi/font": "^2.5.94",
     "axios": "^0.18.0",
     "bulma": "^0.7.1",
+    "http-server": "^0.11.1",
     "iview": "^2.14.3",
     "material-design-icons": "^3.0.1",
     "vue": "^2.5.16",
