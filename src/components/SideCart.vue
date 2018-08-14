@@ -6,8 +6,8 @@
     <div class="cart-list">
       <article class="media" v-for="item in cartList" :key="item.id">
         <figure class="media-left">
-          <p class="image is-64x64">
-            <!-- <img :src="item.$pet.cover_url"> -->
+          <p class="image is-64x64" style="border:1px solid teal">
+            <img :src="item.$pet.cover_url">
           </p>
         </figure>
         <div class="media-content">
@@ -16,7 +16,7 @@
             <span>
               单价
               <i class="mdi mdi-currency-cny"></i>
-              {{item.$pet.price*300}}
+              {{item.$pet.price}}
             </span>
             <label>
               数量
@@ -38,7 +38,7 @@
       <h4>总价：
         <span>
           <i class="mdi mdi-currency-cny"></i>
-          {{cartTotalPrice *300}}
+          {{cartTotalPrice}}
         </span>
       </h4>
     </div>
@@ -51,7 +51,6 @@
 import session from "../utils/session";
 export default {
   created() {
-    console.log(this.user_id);
     this.$store.dispatch("cart/getCartList", { user_id: this.user_id });
   },
   methods: {
@@ -66,11 +65,9 @@ export default {
   },
   computed: {
     cartList() {
-      // console.log(this.$store);
       return this.$store.state.cart.cartList;
     },
     cartProducts() {
-      console.log(this.$store);
       return this.$store.getters["cart/cartProducts"];
     },
     cartTotalPrice() {

@@ -41,7 +41,7 @@ export default {
     getOrderInfo(order_id) {
       api("order/first", { where: { oid: order_id } }).then(r => {
         const order = (this.order = r.data);
-        console.log(this.order);
+      
         // 如果没有查询结果，说明订单号不正确
         if (!order) {
           alert("订单号有误");

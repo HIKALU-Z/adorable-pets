@@ -157,16 +157,18 @@ export default {
         }
       });
     },
+    // 监听获取验证码点击事件
     handleGetVerifyCode() {
+      // 如果仍然在计时中，那么退出。否则继续
       if (this.captcha.cooldown) return;
+      // 如果未填写手机号，那么退出，否则继续
+      if (!this.formValidate.phone) return;
 
       let action;
 
       this.captcha.cooldown = 60;
 
       action = "sms";
-
-      if (!this.formValidate.phone) return;
 
       this.captcha.timer = setInterval(() => {
         if (this.captcha.cooldown == 0) {

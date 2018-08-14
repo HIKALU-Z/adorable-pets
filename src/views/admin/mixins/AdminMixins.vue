@@ -74,7 +74,7 @@ export default {
      */
     handleSubmit() {
       let action = this.current.id ? "update" : "create";
-      console.log(this.current);
+     
       api(`${this.model}/${action}`, this.current).then(() => {
         this.current = {};
         this.read();
@@ -106,7 +106,7 @@ export default {
       if (!confirm("确定删除？")) return;
 
       api(`${this.model}/delete`, { id }).then(() => {
-        console.log("this.currentPage:", this.currentPage);
+        
         this.read(this.currentPage);
       });
     },
@@ -120,7 +120,7 @@ export default {
       this.searchable.forEach(item => {
         params.or[item] = this.keyword;
       });
-      console.log(params);
+
       api(`${this.model}/search`, {
         or: params.or
       }).then(r => {

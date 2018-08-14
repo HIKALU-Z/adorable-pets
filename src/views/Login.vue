@@ -7,15 +7,24 @@
         <div class="box">
           <h1 class="title has-text-centered">登录</h1>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" @submit.native.prevent>
-            <FormItem label="UserName" prop="username">
+            <FormItem label="用户名" prop="username">
               <Input v-model="formValidate.username" placeholder="Enter your username"></Input>
             </FormItem>
-            <FormItem label="Password" prop="password">
+            <FormItem label="密码" prop="password">
               <Input v-model="formValidate.password" type="password" placeholder="Enter your password"></Input>
             </FormItem>
             <FormItem>
-              <Button type="primary" html-type="submit" @click="handleSubmit('formValidate')">Submit</Button>
+              <Button type="primary" html-type="submit" @click="handleSubmit('formValidate')">提交</Button>
               <!-- <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button> -->
+            </FormItem>
+            <FormItem>
+              <div class="well">
+                <span>测试账号</span>
+                <ul>
+                  <li>用户名：admin</li>
+                  <li>密码：123123</li>
+                </ul>
+              </div>
             </FormItem>
           </Form>
         </div>
@@ -113,4 +122,10 @@ export default {
 </script>
 
 <style scoped>
+.well {
+  border-radius: 8px;
+  padding: 10px 20px;
+  background: rgba(207, 72, 72, 0.3);
+  box-shadow: 0 0 5px 1px rgba(82, 33, 33, 0.2) inset;
+}
 </style>

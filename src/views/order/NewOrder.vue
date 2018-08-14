@@ -45,7 +45,7 @@ import { generate_oid } from "./../../utils/order.js";
 export default {
   mounted() {
     this.current = Object.assign({}, this.current, this.$route.query);
-    console.log(this.current);
+
     this.findPet(this.current.pet_id);
   },
   data() {
@@ -61,15 +61,15 @@ export default {
   methods: {
     findPet(id) {
       api("pet/find", { id }).then(r => {
-        console.log(r.data);
+
         this.product = r.data;
         this.initCurrent(this.product);
-        // console.log(r.data);
+
       });
     },
     handleSubmit() {
       api("order/create", this.current).then(r => {
-        console.log(r);
+ 
         this.$router.push("pay/" + r.data.oid);
       });
     },

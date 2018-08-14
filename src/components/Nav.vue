@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <nav class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
@@ -17,39 +18,36 @@
             <div id="navbarMain" class="navbar-menu">
                 <div class="navbar-start">
                     <router-link to="/" class="navbar-item">
-                        Home
+                        首页
                     </router-link>
-                    <!-- <router-link to="/detail/1" class="navbar-item">
-                        Detail
-                    </router-link> -->
                     <router-link to="/search" class="navbar-item">
-                        Search
+                        搜索
                     </router-link>
                     <div class="navbar-item has-dropdown is-hoverable" v-if="isAdmin">
                         <a class="navbar-link" href="#">
-                            Admin
+                            管理
                         </a>
                         <div class="navbar-dropdown is-boxed">
                             <router-link to="/admin/category" class="navbar-item">
-                                Category
+                                分类管理
                             </router-link>
                             <router-link to="/admin/user" class="navbar-item">
-                                User
+                                用户管理
                             </router-link>
                             <router-link to="/admin/pet" class="navbar-item">
-                                Pet
+                                宠物管理
                             </router-link>
                             <router-link to="/admin/breed" class="navbar-item">
-                                Breed
+                                种类管理
                             </router-link>
                             <router-link to="/admin/order" class="navbar-item">
-                                Order
+                                订单管理
                             </router-link>
                         </div>
                     </div>
                 </div>
 
-                <div class="navbar-end">
+                <div class="navbar-end" v-if="hasLogin">
                     <div class="navbar-item has-dropdown is-hoverable account-name">
 
                         <a class="navbar-link">
@@ -58,17 +56,22 @@
 
                         <div class="navbar-dropdown is-right is-boxed">
                             <router-link to="/me/setting" class="navbar-item">
-                                Setting
+                                账户管理
                             </router-link>
                             <router-link to="/me/order" class="navbar-item">
-                                Order
+                                我的订单
                             </router-link>
                             <hr class="navbar-divider">
-                            <a class="navbar-item" @click="logout">
-                                Logout
+                            <a class="navbar-item" @click="handleLogout">
+                                登出
                             </a>
                         </div>
                     </div>
+                </div>
+                <div class="navbar-end" v-else>
+                    <router-link to="/login" class="navbar-item">
+                        登录
+                    </router-link>
                 </div>
             </div>
         </nav>
@@ -84,14 +87,15 @@ export default {
   },
   data() {
     return {
+      hasLogin: session.logged_in(),
       accountname: session.uinfo().username || "Account-Center",
       isAdmin: session.is_admin() || false
     };
   },
   methods: {
-    logout() {
-      session.logout();
-      this.$route.push("/login");
+    handleLogout() {
+      session.logout("#/login");
+      // this.$router.push("/login");
     }
   }
 };

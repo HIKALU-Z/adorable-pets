@@ -69,9 +69,9 @@
             </h2>
             <p class="subtitle mdi mdi-currency-cny">1000
             </p>
-            <button v-if="!isInCart" class="button is-default" @click="handleAddToCart">加入购物车</button>
-            <button v-if="isInCart" class="button is-default" disabled>已加入购物车</button>
-            <button v-if="!isInCart" class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
+            <button class="button is-default" @click="handleAddToCart">加入购物车</button>
+            <!-- <button v-if="isInCart" class="button is-default" disabled>已加入购物车</button> -->
+            <button class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default {
   },
   created() {
     this.pet_id = this.$route.params.id;
-    this.checkPetExist();
+    // this.checkPetExistInCart();
   },
   mounted() {
     this.getDetailInfo();
@@ -108,10 +108,10 @@ export default {
       step: 0,
       pet_id: null,
       current: {},
-      count: 1,
+      // count: 1,
       user_id: session.his_id(),
-      cartList: [],
-      isInCart: false // 判断当前宠物是否在购物车内,默认不在宠物车内
+      cartList: []
+      // isInCart: false // 判断当前宠物是否在购物车内,默认不在宠物车内
     };
   },
   methods: {
@@ -132,17 +132,14 @@ export default {
         this.current = r.data;
       });
     },
-    checkPetExist() {
-      this.$store.state.cart.cartList.forEach(item => {
-        // console.log("item:", item.pet_id);
-        // console.log("current:", this.pet_id);
-
-        if (item.pet_id == this.pet_id) {
-          console.log("id", this.current.id);
-          this.isInCart = true;
-        }
-      });
-    },
+    // 检测宠物是否已存在，如果已经有此宠物，那么就显示已加入购物车的按钮
+    // checkPetExistInCart() {
+    //   this.$store.state.cart.cartList.forEach(item => {
+    //     if (item.pet_id == this.pet_id) {
+    //       this.isInCart = true;
+    //     }
+    //   });
+    // },
     handleGo(query) {
       this.$router.push({ path: "/order/new", query });
     },
@@ -154,6 +151,8 @@ export default {
       };
       if (!obj.user_id) {
         alert("尚未登录，请先登录");
+        this.$router.push("/login");
+        return;
       }
       let hasSamePet;
       this.$store.state.cart.cartList.forEach(item => {
@@ -163,7 +162,15 @@ export default {
       });
       if (!hasSamePet) {
         this.$store.dispatch("cart/addItemToCart", obj);
+        // this.isInCart = true;
+      } else {
+        this.$store.dispatch("cart/incrementItemQuantity", obj.pet_id);
       }
+    }
+  },
+  computed: {
+    count() {
+      return this.$store.cart.count;
     }
   }
 };

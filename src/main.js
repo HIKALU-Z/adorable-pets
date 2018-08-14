@@ -52,10 +52,16 @@ router.beforeEach((to, from, next) => {
   } else {
     $toggleBodyClassList(true);
   }
-  // console.log(session.is_admin());
+
   // 判断是否是管理员
   if (!session.is_admin() && to.fullPath.startsWith("/admin")) {
     alert("您不是管理员，无权前往该页面，请使用管理员身份登录");
+    next("/login");
+    return;
+  }
+  //判断是否登录
+  if (!session.logged_in() && to.fullPath.startsWith("/order")) {
+    alert("尚未登录，无此权限，请先登录");
     next("/login");
     return;
   }

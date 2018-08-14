@@ -38,7 +38,6 @@ const actions = {
       },
       with: "has_one:pet"
     }).then(r => {
-      console.log(r);
       let result = r.data || [];
       commit("setCartItems", result);
     });
@@ -48,7 +47,6 @@ const actions = {
     api("cart/delete", {
       id: id
     }).then(r => {
-      console.log(r.success);
       if (r.success) {
         commit("removeProductFromCart", id);
       }
@@ -97,7 +95,7 @@ const mutations = {
     });
     state.cartList = result;
   },
-
+  // 增加其中某一条的数量
   incrementItemQuantity(state, { id }) {
     const cartItem = state.items.find(item => item.id === id);
     cartItem.quantity++;

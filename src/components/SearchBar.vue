@@ -2,22 +2,14 @@
   <div>
     <!-- main-search -->
     <div class="search-container">
-      <div class="level">
-        <div class="level-left">
-          <button class="button" @click="switchForm(1)">分类</button>
-          <button class="button" @click="switchForm(2)">品种</button>
-          <!-- <button class="button" @click="switchForm(3)">毛色</button> -->
-          <!-- <button class="button" @click="switchForm(4)">脾气</button> -->
-          <!-- <button class="button" @click="switchForm(5)">年龄</button> -->
-          <button class="button" @click="switchForm(3)">价格</button>
-        </div>
-        <div class="level-right">
-          <form @submit.prevent="handleSearch" class="search-input">
-            <input type="text" v-model="keyword" placeholder="请输入标题搜索萌宠">
-            <button type="submit" hidden>submit</button>
-          </form>
-        </div>
-      </div>
+      <!-- search-button -->
+      <form @submit.prevent="handleSearch" class="search-input">
+        <input type="text" v-model="keyword" placeholder="请输入标题搜索萌宠">
+        <button type="submit" hidden>submit</button>
+      </form>
+      <button class="button" @click="switchForm(1)">分类</button>
+      <button class="button" @click="switchForm(2)">品种</button>
+      <button class="button" @click="switchForm(3)">价格</button>
 
       <!-- search-form -->
       <div class="search-form-container" v-if="showFrom>0">
@@ -186,6 +178,12 @@ export default {
   button:first-child {
     margin-left: 0;
   }
+  .search-input {
+    display: inline-block;
+    input {
+      padding: 4px 10px;
+    }
+  }
 }
 .search-form-container {
   position: absolute;
@@ -203,16 +201,6 @@ export default {
       &:nth-child(2) {
         margin-left: 10px;
       }
-      &::-webkit-input-placeholder {
-        color: red;
-      }
-    }
-  }
-  .search-input {
-    float: right;
-    input[type="text"] {
-      width: 360px;
-      padding: 5px 10px;
     }
   }
 }

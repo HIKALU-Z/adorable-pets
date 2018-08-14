@@ -3,22 +3,22 @@
     <Nav></Nav>
     <SearchBar></SearchBar>
 
-    <section class="section" style="padding-top:7rem">
+    <section v-cloak class="section" style="padding-top:7rem">
       <div class="columns is-multiline">
         <div class="column is-3" v-for="item in petList" :key="item.id">
-          <div class="box">
-            <article>
-              <div class="pet-title">
-                <router-link class="box-title" :title="item.title" :to="`/detail/${item.id}`">{{item.title}}</router-link>
+          <div class="card">
+            <router-link tag="article" :to="`/detail/${item.id}`">
+              <div class="pet-title has-text-centered">
+                <span class="card-title" :title="item.title">{{item.title}}</span>
               </div>
               <figure class="image is-3by2">
                 <img :src="item.cover_url || 'https://dummyimage.com/600x400/cccccc/ffffff.png'" alt="">
                 <div class="pet-desc">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit optio vel, magnam, veniam reiciendis vitae blanditiis ratione eligendi iure, ullam eaque? Necessitatibus suscipit eaque voluptatem tempore facere ex quisquam ea!
+                  <span class="mdi mdi-currency-cny">{{item.price}}</span>
                 </div>
               </figure>
 
-            </article>
+            </router-link>
             <!-- {{item}} -->
           </div>
         </div>
@@ -72,15 +72,18 @@ export default {
 </script>
 
 <style scoped>
-.box figure {
+.card figure {
   position: relative;
 }
+
 .pet-title {
   height: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-top: 5px;
 }
+
 .pet-desc {
   height: 60px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -90,16 +93,26 @@ export default {
   right: 0;
   bottom: 0;
   color: #ffffff;
-  padding: 5px;
-  font-size: 1rem;
-  line-height: 1.8rem;
+  padding: 15px;
   opacity: 0;
   transition: opacity 0.3s ease-in;
 }
+
+.pet-desc span {
+  color: yellow;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+article {
+  cursor: pointer;
+}
+
 article:hover .pet-desc {
   opacity: 1;
 }
-.box-title {
+
+.card-title {
   font-size: 1.4rem;
   font-weight: bold;
   color: teal;

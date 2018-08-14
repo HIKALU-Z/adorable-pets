@@ -23,7 +23,7 @@
 
                 <div class="card-content">
                   <h3>{{pet.title}}</h3>
-                  <i class="mdi mdi-currency-cny">{{pet.price*300}}</i>
+                  <i class="mdi mdi-currency-cny">{{pet.price}}</i>
                   <Rate style="float:right;clear:both" disabled v-model="starValue"></Rate>
                 </div>
                 <div class="card-footer">
@@ -92,8 +92,9 @@ export default {
 .category-container {
   .level {
     margin-top: 20px;
-    border: 1px solid orange;
-    padding: 10px;
+    background-color: rgba($color: #ffffff, $alpha: 0.9);
+    border: 2px solid rgba(0, 81, 255, 0.473);
+    padding: 10px 20px;
     h2 {
       cursor: pointer;
     }
