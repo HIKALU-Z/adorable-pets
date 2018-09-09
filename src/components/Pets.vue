@@ -9,6 +9,7 @@
             </div>
             <div class="level-left">
               <router-link :to="`search?breed_id=${item.id}`" class="breed" v-for="item in category.$breed" :key="item.name">{{item.name}}</router-link>
+              <router-link to="/search" class="breed more-breed">更多</router-link>
             </div>
           </div>
 
@@ -111,6 +112,15 @@ export default {
       &:hover {
         color: #000000;
       }
+    }
+    .more-breed {
+      text-decoration: solid;
+    }
+  }
+  .level-right {
+    .title {
+      font-size: 1.4rem;
+      font-weight: 500;
     }
   }
 }

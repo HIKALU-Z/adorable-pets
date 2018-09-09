@@ -29,11 +29,11 @@
           </div>
         </div>
         <div class="media-right">
-          <button class="delete" @click="removeItem(item.id)"></button>
+          <button class="delete" @click="handleRemoveItem(item.id)"></button>
         </div>
       </article>
     </div>
-    <button class="button is-info btn-pay">前去结算</button>
+    <button class="button is-info btn-pay" @click="handleBalance">前去结算</button>
     <div class="content total-price">
       <h4>总价：
         <span>
@@ -51,11 +51,17 @@
 import session from "../utils/session";
 export default {
   created() {
+    // 初始化购物车列表
     this.$store.dispatch("cart/getCartList", { user_id: this.user_id });
   },
   methods: {
-    removeItem(id) {
+    // 删除购物车中的某一项
+    handleRemoveItem(id) {
       this.$store.dispatch("cart/removeCartItem", id);
+    },
+    // 结算购物车
+    handleBalance() {
+      this.$router.push({ path: "/order/new", query: { id: this.user_id } });
     }
   },
   data() {

@@ -1,4 +1,3 @@
-
 <script>
 import api from "./../../../api";
 export default {
@@ -74,7 +73,7 @@ export default {
      */
     handleSubmit() {
       let action = this.current.id ? "update" : "create";
-     
+
       api(`${this.model}/${action}`, this.current).then(() => {
         this.current = {};
         this.read();
@@ -106,7 +105,6 @@ export default {
       if (!confirm("确定删除？")) return;
 
       api(`${this.model}/delete`, { id }).then(() => {
-        
         this.read(this.currentPage);
       });
     },

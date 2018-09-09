@@ -71,7 +71,7 @@
             </p>
             <button class="button is-default" @click="handleAddToCart">加入购物车</button>
             <!-- <button v-if="isInCart" class="button is-default" disabled>已加入购物车</button> -->
-            <button class="button is-primary" style="margin-left:10px" @click="handleGo(current)">直接购买</button>
+            <button class="button is-primary" style="margin-left:10px" @click="handleBuy(current.id)">直接购买</button>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default {
       step: 0,
       pet_id: null,
       current: {},
-      // count: 1,
+      count: 1,
       user_id: session.his_id(),
       cartList: []
       // isInCart: false // 判断当前宠物是否在购物车内,默认不在宠物车内
@@ -140,8 +140,8 @@ export default {
     //     }
     //   });
     // },
-    handleGo(query) {
-      this.$router.push({ path: "/order/new", query });
+    handleBuy(id) {
+      this.$router.push({ path: "/order/new", query: { pet_id: id } });
     },
     handleAddToCart() {
       let obj = {
@@ -164,15 +164,15 @@ export default {
         this.$store.dispatch("cart/addItemToCart", obj);
         // this.isInCart = true;
       } else {
-        this.$store.dispatch("cart/incrementItemQuantity", obj.pet_id);
+        this.$store.dispatch(
+          "cart/incrementItemQuantity",
+          parseInt(obj.pet_id)
+        );
       }
+      this.$Message.success("商品已成功加入购物车");
     }
   },
-  computed: {
-    count() {
-      return this.$store.cart.count;
-    }
-  }
+  computed: {}
 };
 </script>
 

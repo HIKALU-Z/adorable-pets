@@ -2,7 +2,8 @@ import api from "./../../api";
 // initial state
 // shape: [{ id, quantity }]
 const state = {
-  cartList: []
+  cartList: [],
+  count: 1
 };
 
 // getters
@@ -79,6 +80,10 @@ const actions = {
           commit("setCartItems", result);
         });
       });
+  },
+  // 如果此项宠物已在购物车内，那么增加该项商品的数量
+  incrementItemQuantity({ commit }, id) {
+    commit("incrementItemQuantity", id);
   }
 };
 
@@ -96,9 +101,9 @@ const mutations = {
     state.cartList = result;
   },
   // 增加其中某一条的数量
-  incrementItemQuantity(state, { id }) {
-    const cartItem = state.items.find(item => item.id === id);
-    cartItem.quantity++;
+  incrementItemQuantity(state, id) {
+    const cartItem = state.cartList.find(item => item.$pet.id === id);
+    cartItem.count++;
   },
   // 设置购物车数据
   setCartItems(state, list) {

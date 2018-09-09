@@ -23,7 +23,6 @@ const actions = {
     });
   },
   searchPetList({ commit }, { query = state.query, page = 1 }) {
- 
     api("pet/read", { query, limit: 8, page }).then(r => {
       let result = r.data || [];
 
